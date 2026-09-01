@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <title>Ceramica · Gift Sets</title>
+  <link rel="icon" type="image/jpeg" href="images/gift-hero.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ===== RESET & BASE ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #ffffff;
+      --bg-dark: #1e2b2a;
+      --text-primary: #1e2b2a;
+      --text-secondary: #4a5a58;
+      --text-light: #e8e0d8;
+      --border-color: #dce5e2;
+      --accent: #3a7d6b;
+      --accent-light: #5a9a87;
+      --accent-dark: #2a5f50;
+      --shadow: rgba(0, 0, 0, 0.06);
+      --hero-overlay: rgba(0, 0, 0, 0.35);
+      --card-bg: #ffffff;
+      --section-bg: #f8faf9;
+      --transition: 0.3s ease;
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #141d1c;
+      --bg-secondary: #1e2b2a;
+      --text-primary: #e8f0ed;
+      --text-secondary: #a8bdb8;
+      --text-light: #5f5349;
+      --border-color: #2a3d3a;
+      --shadow: rgba(0, 0, 0, 0.3);
+      --hero-overlay: rgba(0, 0, 0, 0.6);
+      --card-bg: #1e2b2a;
+      --section-bg: #141d1c;
+    }
+
+    [dir="rtl"] { text-align: right; }
+    [dir="rtl"] .hero-text p { margin-right: 0; margin-left: auto; }
+    [dir="rtl"] .section-title { justify-content: center; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      transition: background var(--transition), color var(--transition);
+      overflow-x: hidden;
+    }
+
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* ===== NAVBAR (EXACT COPY) ===== */
+    .navbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      background: #dce8e4;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: background var(--transition), border-color var(--transition);
+    }
+
+    .logo, .footer-logo-link {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: color var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .logo span, .footer-logo-link span { color: var(--accent); font-weight: 300; }
+    .logo i, .footer-logo-link i { color: var(--accent); font-size: 1.7rem; }
+
+    [data-theme="dark"] .logo, [data-theme="dark"] .footer-logo-link { color: #e8f0ed; }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      list-style: none;
+      font-weight: 500;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a.active { color: var(--accent); border-bottom: 2px solid var(--accent); }
+
+    .dropdown { position: relative; cursor: pointer; }
+    .dropdown > a { display: flex; align-items: center; gap: 4px; }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background: var(--bg-secondary);
+      min-width: 140px;
+      box-shadow: 0 12px 24px var(--shadow);
+      border-radius: 12px;
+      padding: 0.6rem 0;
+      top: 1.8rem;
+      left: -10px;
+      z-index: 10;
+      border: 1px solid var(--border-color);
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    [dir="rtl"] .dropdown-content { left: auto; right: -10px; }
+    .dropdown-content.show { display: block; opacity: 1; transform: translateY(0); }
+    .dropdown-content a {
+      display: block;
+      padding: 0.5rem 1.5rem;
+      color: var(--text-primary);
+      font-weight: 400;
+      text-decoration: none;
+    }
+    .dropdown-content a:hover { background: var(--bg-primary); color: var(--accent); }
+    .dropdown-content a.active-drop { color: var(--accent); background: var(--bg-primary); }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .nav-controls .toggle-btn {
+      background: none;
+      border: 1px solid var(--border-color);
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 0.7rem;
+      font-weight: 600;
+      transition: all 0.2s;
+      background: var(--bg-secondary);
+      font-family: 'Inter', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .nav-controls .toggle-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .nav-controls .toggle-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    .nav-controls .login-btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: 0.2s;
+      text-decoration: none;
+    }
+    .nav-controls .login-btn:hover { background: var(--accent-dark); transform: translateY(-2px); }
+
+    .nav-controls .signup-btn {
+      background: transparent;
+      color: var(--accent);
+      border: 2px solid var(--accent);
+      padding: 0.45rem 1.2rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: 0.2s;
+      text-decoration: none;
+    }
+    .nav-controls .signup-btn:hover { background: var(--accent); color: #fff; }
+
+    [data-theme="dark"] .navbar { background: #0d1615 !important; border-bottom: 1px solid #1a2a27 !important; }
+    [data-theme="dark"] .navbar .nav-links a { color: #e8f0ed !important; }
+    [data-theme="dark"] .navbar .logo { color: #e8f0ed !important; }
+    [data-theme="dark"] .navbar .logo span { color: var(--accent) !important; }
+    [data-theme="dark"] .navbar .logo i { color: var(--accent) !important; }
+
+    /* ============================================================
+       GIFT HERO - SPLIT LAYOUT (Image Left, Content Right with Floating Badge)
+       ============================================================ */
+    .gift-hero {
+      width: 100%;
+      padding: 3rem 0;
+      background: var(--bg-primary);
+      transition: background var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    [data-theme="dark"] .gift-hero {
+      background: var(--bg-dark);
+    }
+    .gift-hero .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      align-items: center;
+      position: relative;
+    }
+    .gift-hero .hero-image {
+      width: 100%;
+      height: 420px;
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px var(--shadow);
+      position: relative;
+    }
+    .gift-hero .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .gift-hero .hero-image .floating-badge {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: var(--accent);
+      color: #fff;
+      padding: 0.5rem 1.2rem;
+      border-radius: 60px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 8px 20px rgba(58, 125, 107, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      animation: floatBadge 3s ease-in-out infinite;
+    }
+    @keyframes floatBadge {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .gift-hero .hero-text {
+      padding: 2rem 2rem 2rem 3.5rem;
+    }
+    .gift-hero .hero-text .hero-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 0.25rem 1.2rem;
+      border-radius: 60px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.6rem;
+    }
+    .gift-hero .hero-text h1 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      line-height: 1.1;
+    }
+    .gift-hero .hero-text h1 span { color: var(--accent); }
+    .gift-hero .hero-text p {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    .gift-hero .hero-text .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .gift-hero .hero-text .hero-stats .stat .number {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--accent);
+      display: block;
+    }
+    .gift-hero .hero-text .hero-stats .stat .label {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    @media (max-width: 992px) {
+      .gift-hero .hero-grid { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
+      .gift-hero .hero-text { padding: 0 1rem; text-align: center; }
+      .gift-hero .hero-text p { max-width: 100%; margin: 0 auto 1.5rem; }
+      .gift-hero .hero-text .hero-stats { justify-content: center; }
+      .gift-hero .hero-image { height: 280px; }
+      .gift-hero .hero-image .floating-badge { bottom: 12px; right: 12px; font-size: 0.6rem; padding: 0.3rem 0.8rem; }
+    }
+    @media (max-width: 768px) {
+      .gift-hero { padding: 2rem 0; }
+      .gift-hero .hero-text h1 { font-size: 2.2rem; }
+      .gift-hero .hero-text .hero-stats { gap: 1.5rem; }
+      .gift-hero .hero-text .hero-stats .stat .number { font-size: 1.4rem; }
+      .gift-hero .hero-image { height: 220px; }
+    }
+    @media (max-width: 480px) {
+      .gift-hero .hero-text h1 { font-size: 1.8rem; }
+      .gift-hero .hero-image { height: 180px; border-radius: 20px; }
+    }
+
+    /* ============================================================
+       GIFT CARDS SECTION
+       ============================================================ */
+    .gift-cards-section {
+      background: var(--bg-primary);
+      padding: 5rem 0;
+      transition: background var(--transition);
+    }
+    .gift-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+      margin-top: 1.5rem;
+    }
+    .gift-card {
+      background: var(--card-bg);
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      transition: 0.35s ease;
+      box-shadow: 0 4px 16px var(--shadow);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .gift-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px var(--shadow);
+      border-color: var(--accent);
+    }
+    .gift-card .gift-img {
+      width: 100%;
+      height: 220px;
+      overflow: hidden;
+      background: #e8f0ed;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .gift-card .gift-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .gift-card:hover .gift-img img { transform: scale(1.06); }
+    .gift-card .gift-img .gift-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--accent);
+      color: #fff;
+      padding: 0.2rem 1rem;
+      border-radius: 60px;
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .gift-card .gift-body {
+      padding: 1.5rem 1.8rem 1.8rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .gift-card .gift-body .gift-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+    }
+    .gift-card .gift-body .gift-meta .gift-items {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .gift-card .gift-body .gift-meta .gift-items i { font-size: 0.7rem; color: var(--accent); }
+    .gift-card .gift-body h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
+    }
+    .gift-card .gift-body p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+      flex: 1;
+    }
+    .gift-card .gift-body .gift-price {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+    }
+    .gift-card .gift-body .gift-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: 0.8rem;
+      border-top: 1px solid var(--border-color);
+    }
+    .gift-card .gift-body .gift-footer .gift-btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1.5rem;
+      border-radius: 60px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.25s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .gift-card .gift-body .gift-footer .gift-btn:hover {
+      background: var(--accent-dark);
+      transform: scale(1.05);
+    }
+    .gift-card .gift-body .gift-footer .gift-link {
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.2s;
+      font-size: 0.85rem;
+    }
+    .gift-card .gift-body .gift-footer .gift-link:hover { color: var(--accent-dark); }
+    .gift-card .gift-body .gift-footer .gift-link i { transition: 0.2s; }
+    .gift-card .gift-body .gift-footer .gift-link:hover i { transform: translateX(4px); }
+
+    @media (max-width: 992px) {
+      .gift-cards-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 700px) {
+      .gift-cards-grid { grid-template-columns: 1fr; max-width: 450px; margin: 1.5rem auto 0; }
+      .gift-card .gift-img { height: 200px; }
+    }
+
+    /* ============================================================
+       GIFT CTA
+       ============================================================ */
+    .gift-cta {
+      background: var(--bg-dark);
+      border-radius: 32px;
+      padding: 3.5rem 3rem;
+      margin: 0 0 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .gift-cta::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -10%;
+      width: 400px;
+      height: 400px;
+      background: rgba(58, 125, 107, 0.06);
+      border-radius: 50%;
+    }
+    .gift-cta .cta-icon {
+      font-size: 2.8rem;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+      display: block;
+      position: relative;
+      z-index: 1;
+    }
+    .gift-cta h2 {
+      color: #fff;
+      font-size: 2.4rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .gift-cta h2 span { color: var(--accent); }
+    .gift-cta p {
+      color: rgba(255, 255, 255, 0.7);
+      max-width: 500px;
+      margin: 0 auto 1.8rem;
+      font-size: 1.05rem;
+      position: relative;
+      z-index: 1;
+      line-height: 1.7;
+    }
+    .gift-cta .cta-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.2rem;
+      position: relative;
+      z-index: 1;
+    }
+    .gift-cta .cta-btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 0.9rem 2.8rem;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.25s;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .gift-cta .cta-btn-primary:hover {
+      background: var(--accent-light);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(58, 125, 107, 0.3);
+    }
+    .gift-cta .cta-btn-secondary {
+      background: transparent;
+      color: #fff;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      padding: 0.85rem 2.5rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.25s;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .gift-cta .cta-btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-3px);
+    }
+
+    @media (max-width: 768px) {
+      .gift-cta { padding: 2.5rem 1.5rem; }
+      .gift-cta h2 { font-size: 1.8rem; }
+      .gift-cta .cta-btn-primary, 
+      .gift-cta .cta-btn-secondary { width: 100%; justify-content: center; max-width: 300px; }
+    }
+    @media (max-width: 480px) {
+      .gift-cta { padding: 2rem 1rem; border-radius: 20px; }
+      .gift-cta h2 { font-size: 1.4rem; }
+      .gift-cta .cta-btn-primary, 
+      .gift-cta .cta-btn-secondary { padding: 0.7rem 1.5rem; font-size: 0.85rem; }
+    }
+
+    /* ============================================================
+       HAMBURGER & MOBILE NAV (EXACT COPY)
+       ============================================================ */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 10px 12px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      z-index: 1001;
+      flex-shrink: 0;
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      background: #dce8e4;
+    }
+    [data-theme="dark"] .hamburger { background: #0d1615; border-color: #1a2a27; }
+    .hamburger span { display: block; width: 26px; height: 3px; background: var(--text-primary); border-radius: 3px; transition: all 0.3s ease; }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
+    [dir="rtl"] .hamburger { right: auto; left: 15px; }
+
+    .mobile-nav-drawer {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: min(300px, 85vw);
+      height: 100vh;
+      background: var(--bg-primary);
+      border-left: 2px solid var(--accent);
+      z-index: 1000;
+      transition: right 0.3s ease;
+      overflow-y: auto;
+      box-shadow: -10px 0 30px var(--shadow);
+      display: flex;
+      flex-direction: column;
+    }
+    [dir="rtl"] .mobile-nav-drawer { right: auto; left: -100%; border-left: none; border-right: 2px solid var(--accent); }
+    .mobile-nav-drawer.active { right: 0; }
+    [dir="rtl"] .mobile-nav-drawer.active { left: 0; right: auto; }
+
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 20px 14px 20px;
+      border-bottom: 1px solid var(--border-color);
+      flex-shrink: 0;
+    }
+    .drawer-header .logo { font-size: 1.5rem; }
+    .close-drawer {
+      background: none; border: none; color: var(--text-primary); font-size: 24px; cursor: pointer;
+      padding: 4px 8px; transition: 0.2s; display: flex; align-items: center; justify-content: center; line-height: 1;
+    }
+    .close-drawer:hover { color: var(--accent); transform: rotate(90deg); }
+
+    .mobile-nav-drawer ul {
+      list-style: none; margin: 0; padding: 16px 20px 40px 20px;
+      display: flex; flex-direction: column; gap: 4px; flex: 1;
+    }
+    .mobile-nav-drawer ul li { width: 100%; }
+    .mobile-nav-drawer ul li a {
+      color: var(--text-primary); text-decoration: none; font-size: 15px; font-weight: 500;
+      display: flex; align-items: center; justify-content: space-between; padding: 10px 14px;
+      border-radius: 8px; transition: 0.2s; width: 100%; opacity: 0.8;
+    }
+    .mobile-nav-drawer ul li a:hover, .mobile-nav-drawer ul li a.active {
+      color: var(--accent); background: var(--bg-primary); opacity: 1;
+    }
+    .mobile-auth { margin-top: 12px; border-top: 1px solid var(--border-color); padding-top: 14px; gap: 8px; display: flex; flex-direction: column; width: 100%; }
+    .mobile-auth a {
+      width: 100%; text-align: center; justify-content: center; padding: 10px 16px; border-radius: 25px;
+      text-decoration: none; font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px;
+    }
+    .mobile-auth .mobile-login { color: var(--accent); border: 2px solid var(--accent); background: transparent; }
+    .mobile-auth .mobile-login:hover { background: var(--accent); color: #fff; }
+    .mobile-auth .mobile-signup { background: var(--accent); color: #fff; }
+    .mobile-auth .mobile-signup:hover { background: var(--accent-dark); }
+
+    .mobile-actions { margin-top: 8px; gap: 8px; width: 100%; display: flex; flex-wrap: wrap; }
+    .mobile-actions button {
+      border-radius: 25px; padding: 8px 14px; flex: 1; font-size: 13px; gap: 6px; min-width: 80px; height: 38px;
+      background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);
+      cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s; font-weight: 500;
+    }
+    .mobile-actions button:hover { border-color: var(--accent); background: rgba(58, 125, 107, 0.08); }
+    .mobile-actions button i { font-size: 14px; }
+
+    .nav-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 999; }
+    .nav-overlay.active { display: block; }
+    body.menu-open { overflow: hidden !important; position: fixed !important; width: 100% !important; top: 0; left: 0; right: 0; }
+
+    @media (max-width: 1024px) {
+      .nav-links { display: none !important; }
+      .nav-controls { display: none !important; }
+      .hamburger { display: flex !important; }
+    }
+
+    /* ============================================================
+       FOOTER (EXACT COPY)
+       ============================================================ */
+    footer {
+      background: var(--bg-dark);
+      color: var(--text-light);
+      padding: 3rem 0 1.5rem;
+      margin-top: 0;
+    }
+    .footer-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2.5rem;
+      margin-bottom: 2rem;
+    }
+    .footer-box { display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-box p { display: flex; align-items: center; gap: 10px; }
+    .footer-box p i { width: 20px; color: var(--accent); text-align: center; flex-shrink: 0; }
+    .footer-box .footer-logo-link {
+      font-size: 2rem; font-weight: 700; letter-spacing: -0.5px;
+      color: #ffffff !important; text-decoration: none; display: flex; align-items: center; gap: 4px; margin-bottom: 0.3rem;
+    }
+    .footer-box .footer-logo-link span { color: var(--accent); font-weight: 300; }
+    .footer-box .footer-logo-link i { color: var(--accent); font-size: 1.7rem; }
+    .footer-box p { font-size: 0.9rem; color: #c4b8ae; line-height: 1.8; }
+    .footer-box h2 { font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 0.3rem; letter-spacing: 0.5px; }
+    .footer-box a { color: #c4b8ae; text-decoration: none; font-size: 0.9rem; transition: 0.2s; display: block; line-height: 1.8; }
+    .footer-box a:hover { color: var(--accent); padding-left: 4px; }
+    [dir="rtl"] .footer-box a:hover { padding-left: 0; padding-right: 4px; }
+    .social { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+    .social a {
+      background: rgba(255, 255, 255, 0.08); color: #c4b8ae; width: 38px; height: 38px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 1rem; transition: 0.3s ease; text-decoration: none;
+    }
+    .social a:hover { background: var(--accent); color: #fff; transform: translateY(-3px); }
+    .social a.x-icon { font-size: 0; }
+    .social a.x-icon svg { width: 16px; height: 16px; fill: currentColor; }
+    .social a.x-icon:hover svg { fill: #fff; }
+    footer hr { max-width: 1280px; margin: 0 auto; border: none; border-top: 1px solid rgba(255, 255, 255, 0.08); padding: 0 1.5rem; }
+    footer .copy { max-width: 1280px; margin: 1.2rem auto 0; padding: 0 1.5rem; text-align: center; font-size: 0.85rem; color: #7f6b5a; }
+    footer .copy span { color: var(--accent); }
+
+    @media (max-width: 1024px) and (min-width: 768px) {
+      .footer-container { grid-template-columns: 1fr 1fr; gap: 2rem; text-align: left; }
+      .footer-box:first-child { grid-column: 1 / 2; text-align: left !important; align-items: flex-start !important; }
+      .footer-box:first-child .footer-logo-link { justify-content: flex-start !important; }
+      .footer-box:first-child p { text-align: left !important; max-width: 400px; }
+      .footer-box:nth-child(2) { grid-column: 2 / 3; text-align: left !important; align-items: flex-start !important; }
+      .footer-box:nth-child(2) h2, .footer-box:nth-child(2) a { text-align: left !important; }
+      .footer-box:nth-child(3) { grid-column: 1 / 2; grid-row: 2; text-align: left !important; align-items: flex-start !important; }
+      .footer-box:nth-child(3) h2, .footer-box:nth-child(3) p { text-align: left !important; }
+      .footer-box:nth-child(4) { grid-column: 2 / 3; grid-row: 2; text-align: left !important; align-items: flex-start !important; }
+      .footer-box:nth-child(4) h2 { text-align: left !important; }
+      .footer-box:nth-child(4) .social { justify-content: flex-start !important; }
+      footer .copy { text-align: center !important; }
+    }
+    @media (max-width: 767px) {
+      footer { padding: 2rem 0 1rem; }
+      .footer-container { grid-template-columns: 1fr; gap: 1.5rem; text-align: left !important; padding: 0 1.5rem; }
+      .footer-box { text-align: left !important; align-items: flex-start !important; }
+      .footer-box .footer-logo-link { justify-content: flex-start !important; font-size: 1.6rem !important; }
+      .footer-box .footer-logo-link i { font-size: 1.4rem !important; }
+      .footer-box .footer-logo-link span { font-size: 1.6rem !important; }
+      .footer-box p { text-align: left !important; font-size: 0.85rem; max-width: 100%; }
+      .footer-box h2 { text-align: left !important; font-size: 1rem; margin-bottom: 0.2rem; }
+      .footer-box a { text-align: left !important; font-size: 0.85rem; }
+      .footer-box .social { justify-content: flex-start !important; }
+      .social a { width: 34px; height: 34px; font-size: 0.85rem; }
+      .social a.x-icon svg { width: 14px; height: 14px; }
+      footer .copy { text-align: center !important; font-size: 0.75rem; padding: 0 1.5rem; }
+      .footer-box:first-child { grid-column: 1; }
+      .footer-box:nth-child(4) { grid-column: 1; }
+      .footer-box:nth-child(4) .social { justify-content: flex-start !important; }
+    }
+    @media (max-width: 480px) {
+      footer { padding: 1.5rem 0 1rem; }
+      .footer-container { gap: 1.2rem; padding: 0 1.2rem; }
+      .footer-box .footer-logo-link { font-size: 1.4rem !important; }
+      .footer-box .footer-logo-link i { font-size: 1.2rem !important; }
+      .footer-box .footer-logo-link span { font-size: 1.4rem !important; }
+      .footer-box p { font-size: 0.8rem; }
+      .footer-box h2 { font-size: 0.9rem; }
+      .footer-box a { font-size: 0.8rem; }
+      .social a { width: 30px; height: 30px; font-size: 0.75rem; }
+      .social a.x-icon svg { width: 12px; height: 12px; }
+      footer .copy { font-size: 0.65rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVBAR (EXACT COPY) ===== -->
+  <nav class="navbar">
+    <div class="container" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; width:100%; padding:0;">
+      <a href="index.html" class="logo"><i class="fas fa-utensils"></i>Ceram<span>ica</span></a>
+      <ul class="nav-links">
+        <li class="dropdown" id="homeDropdown">
+          <a href="#" onclick="toggleDropdown(event)">Home <i class="fas fa-chevron-down" style="font-size:0.6rem;"></i></a>
+          <div class="dropdown-content" id="dropdownContent">
+            <a href="index.html">Home 1</a>
+            <a href="home2.html">Home 2</a>
+          </div>
+        </li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="materials.html">Materials</a></li>
+        <li><a href="recipes.html">Recipes</a></li>
+        <li><a href="gifts.html" class="active">Gift Sets</a></li>
+         <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-controls">
+        <button class="toggle-btn" onclick="toggleRTL()" id="rtlBtn">RTL</button>
+        <button class="toggle-btn" onclick="toggleTheme()" title="Toggle Dark/Light Mode" id="themeToggle">
+          <i class="fas fa-moon"></i>
+        </button>
+        <a href="login.html" class="login-btn"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a href="signup.html" class="signup-btn">Sign Up</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== HAMBURGER ===== -->
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- ===== MOBILE NAV DRAWER ===== -->
+  <div class="mobile-nav-drawer" id="mobileNav">
+    <div class="drawer-header">
+      <a href="index.html" class="logo"><i class="fas fa-utensils"></i>Ceram<span>ica</span></a>
+      <button class="close-drawer" onclick="closeMenu()">✕</button>
+    </div>
+    <ul>
+      <li><a href="index.html">Home 1</a></li>
+      <li><a href="home2.html">Home 2</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="materials.html">Materials</a></li>
+      <li><a href="recipes.html">Recipes</a></li>
+      <li><a href="gifts.html" class="active">Gift Sets</a></li>
+       <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li class="mobile-auth">
+        <a href="login.html" class="mobile-login">Login</a>
+        <a href="signup.html" class="mobile-signup">Sign Up</a>
+      </li>
+      <li class="mobile-actions">
+        <button onclick="toggleMobileRTL()" id="mobileRtlBtn">
+          <i class="fas fa-exchange-alt"></i> <span id="mobileRtlLabel">RTL</span>
+        </button>
+        <button onclick="toggleMobileTheme()" id="mobileThemeBtn">
+          <i class="fas fa-moon" id="mobileThemeIcon"></i> <span id="mobileThemeLabel">Dark</span>
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ===== OVERLAY ===== -->
+  <div class="nav-overlay" id="navOverlay" onclick="closeMenu()"></div>
+
+  <!-- ============================================================
+       GIFT HERO - SPLIT LAYOUT (Image Left, Content Right)
+       ============================================================ -->
+  <section class="gift-hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-image">
+          <img src="images/gift-hero.jpg" alt="Gift Sets Collection">
+          <div class="floating-badge">
+            <i class="fas fa-gift"></i> Perfect for Gifting
+          </div>
+        </div>
+        <div class="hero-text">
+          <span class="hero-badge"><i class="fas fa-gift"></i> Gift Sets</span>
+          <h1>Find the <span>Perfect</span> Gift</h1>
+          <p>Beautifully curated ceramic cookware sets for housewarming, weddings, holidays, and every special moment.</p>
+          <div class="hero-stats">
+            <div class="stat">
+              <span class="number">20+</span>
+              <span class="label">Gift Sets</span>
+            </div>
+            <div class="stat">
+              <span class="number">100%</span>
+              <span class="label">Ceramic</span>
+            </div>
+            <div class="stat">
+              <span class="number">4.9★</span>
+              <span class="label">Rating</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       GIFT CARDS SECTION
+       ============================================================ -->
+  <section class="gift-cards-section">
+    <div class="container">
+      <h2 class="section-title"><i class="fas fa-gift"></i> Curated Gift Collections</h2>
+      <p class="section-subtitle">Thoughtfully assembled sets for every occasion and every cook.</p>
+      <div class="gift-cards-grid">
+
+        <!-- Gift Card 1 -->
+        <div class="gift-card">
+          <div class="gift-img">
+            <img src="images/set 1.jpg" alt="Starter Set">
+            <span class="gift-tag">Best Seller</span>
+          </div>
+          <div class="gift-body">
+            <div class="gift-meta">
+              <span class="gift-items"><i class="fas fa-utensils"></i> 5 Pieces</span>
+            </div>
+            <h3>Starter Set</h3>
+            <p>Essential pieces for any kitchen: Dutch oven, skillet, and ceramic bowl set. Perfect for new home cooks.</p>
+            <div class="gift-price">$149</div>
+            <div class="gift-footer">
+              <a href="products.html" class="gift-btn"><i class="fas fa-shopping-bag"></i> Shop Now</a>
+              <a href="#" class="gift-link">View Details <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gift Card 2 -->
+        <div class="gift-card">
+          <div class="gift-img">
+            <img src="images/set 2.jpg" alt="Baking Collection">
+            <span class="gift-tag">Top Rated</span>
+          </div>
+          <div class="gift-body">
+            <div class="gift-meta">
+              <span class="gift-items"><i class="fas fa-utensils"></i> 4 Pieces</span>
+            </div>
+            <h3>Baking Collection</h3>
+            <p>Stoneware baking dish, pie plate, and loaf pan for the perfect bake. Ideal for bakers of all levels.</p>
+            <div class="gift-price">$129</div>
+            <div class="gift-footer">
+              <a href="products.html" class="gift-btn"><i class="fas fa-shopping-bag"></i> Shop Now</a>
+              <a href="#" class="gift-link">View Details <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gift Card 3 -->
+        <div class="gift-card">
+          <div class="gift-img">
+            <img src="images/set 3.jpg" alt="Hostess Gift">
+            <span class="gift-tag">New</span>
+          </div>
+          <div class="gift-body">
+            <div class="gift-meta">
+              <span class="gift-items"><i class="fas fa-utensils"></i> 6 Pieces</span>
+            </div>
+            <h3>Hostess Gift</h3>
+            <p>Elegant serving platter, dip bowl, and utensil set — perfect for entertaining and dinner parties.</p>
+            <div class="gift-price">$89</div>
+            <div class="gift-footer">
+              <a href="products.html" class="gift-btn"><i class="fas fa-shopping-bag"></i> Shop Now</a>
+              <a href="#" class="gift-link">View Details <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gift Card 4 -->
+        <div class="gift-card">
+          <div class="gift-img">
+            <img src="images/set 4.jpg" alt="Family Feast Set">
+            <span class="gift-tag">Family Favorite</span>
+          </div>
+          <div class="gift-body">
+            <div class="gift-meta">
+              <span class="gift-items"><i class="fas fa-utensils"></i> 8 Pieces</span>
+            </div>
+            <h3>Family Feast Set</h3>
+            <p>Complete dining set with dinner plates, bowls, and serving platters. Made for gathering around the table.</p>
+            <div class="gift-price">$199</div>
+            <div class="gift-footer">
+              <a href="products.html" class="gift-btn"><i class="fas fa-shopping-bag"></i> Shop Now</a>
+              <a href="#" class="gift-link">View Details <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gift Card 5 -->
+        <div class="gift-card">
+          <div class="gift-img">
+            <img src="images/set 5.jpg" alt="Coffee Lovers Set">
+            <span class="gift-tag">Trending</span>
+          </div>
+          <div class="gift-body">
+            <div class="gift-meta">
+              <span class="gift-items"><i class="fas fa-utensils"></i> 4 Pieces</span>
+            </div>
+            <h3>Coffee Lovers Set</h3>
+            <p>Ceramic mugs, espresso cups, and a pour-over set for the perfect morning ritual.</p>
+            <div class="gift-price">$79</div>
+            <div class="gift-footer">
+              <a href="products.html" class="gift-btn"><i class="fas fa-shopping-bag"></i> Shop Now</a>
+              <a href="#" class="gift-link">View Details <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gift Card 6 -->
+        <div class="gift-card">
+          <div class="gift-img">
+            <img src="images/set 6.jpg" alt="Mini Kitchen Set">
+            <span class="gift-tag">Best Value</span>
+          </div>
+          <div class="gift-body">
+            <div class="gift-meta">
+              <span class="gift-items"><i class="fas fa-utensils"></i> 3 Pieces</span>
+            </div>
+            <h3>Mini Kitchen Set</h3>
+            <p>Compact ceramic set with saucepan, frying pan, and storage container. Great for small kitchens.</p>
+            <div class="gift-price">$59</div>
+            <div class="gift-footer">
+              <a href="products.html" class="gift-btn"><i class="fas fa-shopping-bag"></i> Shop Now</a>
+              <a href="#" class="gift-link">View Details <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+ <!-- ============================================================
+       GIFT CTA
+       ============================================================ -->
+  <div class="container">
+    <div class="gift-cta">
+      <span class="cta-icon"><i class="fas fa-gift"></i></span>
+      <h2>Find the <span>Perfect</span> Gift</h2>
+      <p>Not sure which set to choose? Our team is here to help you find the perfect gift for any occasion.</p>
+      <div class="cta-buttons">
+        <a href="products.html" class="cta-btn-primary">
+          <i class="fas fa-gift"></i> Explore Gift Sets
+        </a>
+        <a href="contact.html" class="cta-btn-secondary">
+          <i class="fas fa-headset"></i> Gift Concierge
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER (EXACT COPY) ===== -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-box">
+        <a href="index.html" class="footer-logo-link" onclick="scrollToTop()">
+          <i class="fas fa-utensils"></i>Ceram<span>ica</span>
+        </a>
+        <p>Your destination for premium ceramic cookware, bakeware, and kitchen tools. Crafted for warmth, durability, and timeless style.</p>
+      </div>
+      <div class="footer-box">
+        <h2>Quick Links</h2>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="products.html">Products</a>
+        <a href="materials.html">Materials</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-box">
+        <h2>Contact</h2>
+        <p><i class="fas fa-map-marker-alt"></i> 27 Baker St, London</p>
+        <p><i class="fas fa-phone-alt"></i> +44 (20) 7946 0138</p>
+        <p><i class="fas fa-envelope"></i> hello@ceramica.com</p>
+        <p><i class="fas fa-clock"></i> Mon - Sat : 9AM - 8PM</p>
+      </div>
+      <div class="footer-box">
+        <h2>Follow Us</h2>
+        <div class="social">
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="#" aria-label="Twitter/X" class="x-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <p class="copy">© 2026 <span>Ceramica</span>. All Rights Reserved. Made for the heart of your home.</p>
+  </footer>
+
+  <!-- ===== JAVASCRIPT (EXACT COPY) ===== -->
+  <script>
+    // ===== DROPDOWN TOGGLE =====
+    let dropdownOpen = false;
+    function toggleDropdown(e) {
+      e.preventDefault(); e.stopPropagation();
+      const content = document.getElementById('dropdownContent');
+      dropdownOpen = !dropdownOpen;
+      content.classList.toggle('show', dropdownOpen);
+    }
+    document.addEventListener('click', function(e) {
+      const dropdown = document.getElementById('homeDropdown');
+      if (!dropdown.contains(e.target)) {
+        document.getElementById('dropdownContent').classList.remove('show');
+        dropdownOpen = false;
+      }
+    });
+
+    // ===== THEME TOGGLE =====
+    let darkMode = false;
+    function toggleTheme() {
+      darkMode = !darkMode;
+      const themeIcon = document.getElementById('themeToggle').querySelector('i');
+      const mobileThemeIcon = document.getElementById('mobileThemeIcon');
+      const mobileThemeLabel = document.getElementById('mobileThemeLabel');
+      if (darkMode) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        themeIcon.className = 'fas fa-sun';
+        if (mobileThemeIcon) mobileThemeIcon.className = 'fas fa-sun';
+        if (mobileThemeLabel) mobileThemeLabel.textContent = 'Light';
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+        themeIcon.className = 'fas fa-moon';
+        if (mobileThemeIcon) mobileThemeIcon.className = 'fas fa-moon';
+        if (mobileThemeLabel) mobileThemeLabel.textContent = 'Dark';
+      }
+    }
+    function toggleMobileTheme() { toggleTheme(); }
+
+    // ===== RTL TOGGLE =====
+    let rtlMode = false;
+    function toggleRTL() {
+      rtlMode = !rtlMode;
+      const rtlBtn = document.getElementById('rtlBtn');
+      const mobileRtlLabel = document.getElementById('mobileRtlLabel');
+      if (rtlMode) {
+        document.documentElement.setAttribute('dir', 'rtl');
+        if (rtlBtn) rtlBtn.textContent = 'LTR';
+        if (mobileRtlLabel) mobileRtlLabel.textContent = 'LTR';
+      } else {
+        document.documentElement.removeAttribute('dir');
+        if (rtlBtn) rtlBtn.textContent = 'RTL';
+        if (mobileRtlLabel) mobileRtlLabel.textContent = 'RTL';
+      }
+    }
+    function toggleMobileRTL() { toggleRTL(); }
+
+    // ===== MOBILE MENU =====
+    function toggleMenu(open) {
+      const hamburger = document.getElementById('hamburger');
+      const mobileNav = document.getElementById('mobileNav');
+      const overlay = document.getElementById('navOverlay');
+      if (open) {
+        hamburger.classList.add('active');
+        mobileNav.classList.add('active');
+        if (overlay) overlay.classList.add('active');
+        document.body.classList.add('menu-open');
+      } else {
+        hamburger.classList.remove('active');
+        mobileNav.classList.remove('active');
+        if (overlay) overlay.classList.remove('active');
+        document.body.classList.remove('menu-open');
+      }
+    }
+    function closeMenu() { toggleMenu(false); }
+    document.getElementById('hamburger').addEventListener('click', function(e) {
+      e.stopPropagation();
+      const isOpen = document.getElementById('mobileNav').classList.contains('active');
+      toggleMenu(!isOpen);
+    });
+    document.getElementById('navOverlay').addEventListener('click', closeMenu);
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') { closeMenu(); document.querySelectorAll('.dropdown-content.show').forEach(d => d.classList.remove('show')); }
+    });
+    document.querySelectorAll('.mobile-nav-drawer ul li a').forEach(link => {
+      link.addEventListener('click', function() { if (!this.classList.contains('dropdown-toggle')) { closeMenu(); } });
+    });
+
+    // ===== SCROLL TO TOP =====
+    function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  </script>
+
+</body>
+</html>
