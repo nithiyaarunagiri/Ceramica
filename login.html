@@ -4,11 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
   <title>Ceramica · Login</title>
-  <link rel="icon" type="image/jpeg" href="images/gift-hero.jpg">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40' fill='none'%3E%3Cpath d='M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z' fill='%233a7d6b' fill-opacity='0.2'/%3E%3Cpath d='M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z' stroke='%233a7d6b' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M6 16h28' stroke='%233a7d6b' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M16 16c0-3 1.8-5 4-5s4 2 4 5' stroke='%233a7d6b' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='20' cy='10' r='1.8' fill='%233a7d6b'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script>
+    /* Prevent theme flash on page load */
+    (function() {
+      try {
+        if (localStorage.getItem('ceramica-theme') === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+        if (localStorage.getItem('ceramica-rtl') === 'rtl') {
+          document.documentElement.setAttribute('dir', 'rtl');
+        }
+      } catch(e) {}
+    })();
+  </script>
   <style>
     /* ===== RESET & BASE ===== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -131,7 +144,7 @@
       transition: background var(--transition), border-color var(--transition);
     }
 
-    /* Logo */
+    /* ===== NEW LOGO WITH POT SVG ===== */
     .login-box .logo {
       display: flex;
       align-items: center;
@@ -150,9 +163,13 @@
       color: var(--accent);
       font-weight: 300;
     }
-    .login-box .logo i {
+    .login-box .logo .logo-mark {
       color: var(--accent);
-      font-size: 1.6rem;
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+    .login-box .logo:hover .logo-mark {
+      transform: rotate(-6deg);
     }
     [data-theme="dark"] .login-box .logo {
       color: #e8f0ed;
@@ -331,13 +348,12 @@
       text-transform: uppercase;
     }
 
-    /* ===== SOCIAL BUTTONS - Google Outline, Apple Filled ===== */
+    /* ===== SOCIAL BUTTONS ===== */
     .login-box .social-buttons {
       display: flex;
       gap: 0.8rem;
     }
     
-    /* Google Button - Outline */
     .login-box .social-buttons .social-btn-google {
       flex: 1;
       display: flex;
@@ -368,7 +384,6 @@
       flex-shrink: 0;
     }
 
-    /* Apple Button - Filled Green */
     .login-box .social-buttons .social-btn-apple {
       flex: 1;
       display: flex;
@@ -398,7 +413,6 @@
       color: #fff;
     }
 
-    /* Dark Mode Support */
     [data-theme="dark"] .login-box .social-buttons .social-btn-google {
       border-color: var(--accent-light);
       color: var(--accent-light);
@@ -427,8 +441,9 @@
       .login-box .logo {
         font-size: 1.6rem;
       }
-      .login-box .logo i {
-        font-size: 1.3rem;
+      .login-box .logo .logo-mark {
+        width: 28px;
+        height: 28px;
       }
       .toggles-outer {
         top: 12px;
@@ -483,9 +498,18 @@
   <!-- ===== LOGIN PAGE ===== -->
   <div class="login-page">
     <div class="login-box">
-      <!-- Logo -->
+      <!-- Logo (NEW) -->
       <a href="index.html" class="logo">
-        <i class="fas fa-utensils"></i>Ceram<span>ica</span>
+        <svg class="logo-mark" viewBox="0 0 40 40" width="32" height="32" xmlns="http://www.w3.org/2000/svg" fill="none">
+          <path d="M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z" fill="currentColor" fill-opacity="0.15"/>
+          <path d="M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M6 16h28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M16 16c0-3 1.8-5 4-5s4 2 4 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="20" cy="10" r="1.8" fill="currentColor"/>
+          <path d="M4 20h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M32 20h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        Ceram<span>ica</span>
       </a>
       <p class="logo-sub">Sign in to your account</p>
 
@@ -548,30 +572,34 @@
 
   <!-- ===== JAVASCRIPT ===== -->
   <script>
-    // ===== THEME TOGGLE =====
-    let darkMode = false;
+    /* ===== THEME + RTL PERSISTENCE ===== */
+    let darkMode = localStorage.getItem('ceramica-theme') === 'dark';
+    let rtlMode = localStorage.getItem('ceramica-rtl') === 'rtl';
+
     function toggleTheme() {
       darkMode = !darkMode;
       const themeIcon = document.getElementById('themeToggle').querySelector('i');
       if (darkMode) {
         document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('ceramica-theme', 'dark');
         themeIcon.className = 'fas fa-sun';
       } else {
         document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('ceramica-theme', 'light');
         themeIcon.className = 'fas fa-moon';
       }
     }
 
-    // ===== RTL TOGGLE =====
-    let rtlMode = false;
     function toggleRTL() {
       rtlMode = !rtlMode;
       const rtlLabel = document.getElementById('rtlLabel');
       if (rtlMode) {
         document.documentElement.setAttribute('dir', 'rtl');
+        localStorage.setItem('ceramica-rtl', 'rtl');
         rtlLabel.textContent = 'LTR';
       } else {
         document.documentElement.removeAttribute('dir');
+        localStorage.setItem('ceramica-rtl', 'ltr');
         rtlLabel.textContent = 'RTL';
       }
     }
@@ -609,15 +637,13 @@
       alert('You are signing in with ' + provider.charAt(0).toUpperCase() + provider.slice(1) + '. This feature is coming soon!');
     }
 
-    // ===== CHECK FOR EXISTING THEME ON LOAD =====
+    // ===== SYNC ICONS ON LOAD =====
     window.addEventListener('load', function() {
       if (document.documentElement.getAttribute('data-theme') === 'dark') {
         document.getElementById('themeToggle').querySelector('i').className = 'fas fa-sun';
-        darkMode = true;
       }
       if (document.documentElement.getAttribute('dir') === 'rtl') {
         document.getElementById('rtlLabel').textContent = 'LTR';
-        rtlMode = true;
       }
     });
   </script>

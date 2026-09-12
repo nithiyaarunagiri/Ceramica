@@ -4,11 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
   <title>Ceramica · Pricing</title>
-  <link rel="icon" type="image/jpeg" href="images/gift-hero.jpg">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40' fill='none'%3E%3Cpath d='M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z' fill='%233a7d6b' fill-opacity='0.2'/%3E%3Cpath d='M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z' stroke='%233a7d6b' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M6 16h28' stroke='%233a7d6b' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M16 16c0-3 1.8-5 4-5s4 2 4 5' stroke='%233a7d6b' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='20' cy='10' r='1.8' fill='%233a7d6b'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script>
+    /* Prevent theme flash on page load */
+    (function() {
+      try {
+        if (localStorage.getItem('ceramica-theme') === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+        if (localStorage.getItem('ceramica-rtl') === 'rtl') {
+          document.documentElement.setAttribute('dir', 'rtl');
+        }
+      } catch(e) {}
+    })();
+  </script>
   <style>
     /* ===== RESET & BASE ===== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -63,7 +76,7 @@
 
     .container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
 
-    /* ===== NAVBAR (EXACT COPY) ===== */
+    /* ===== NAVBAR ===== */
     .navbar {
       display: flex;
       flex-wrap: wrap;
@@ -88,6 +101,17 @@
       display: flex;
       align-items: center;
       gap: 4px;
+    }
+
+    .logo .logo-mark,
+    .footer-logo-link .logo-mark {
+      color: var(--accent);
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+    .logo:hover .logo-mark,
+    .footer-logo-link:hover .logo-mark {
+      transform: rotate(-6deg);
     }
 
     .logo span, .footer-logo-link span { color: var(--accent); font-weight: 300; }
@@ -187,20 +211,6 @@
     }
     .nav-controls .login-btn:hover { background: var(--accent-dark); transform: translateY(-2px); }
 
-    .nav-controls .signup-btn {
-      background: transparent;
-      color: var(--accent);
-      border: 2px solid var(--accent);
-      padding: 0.45rem 1.2rem;
-      border-radius: 60px;
-      font-weight: 600;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: 0.2s;
-      text-decoration: none;
-    }
-    .nav-controls .signup-btn:hover { background: var(--accent); color: #fff; }
-
     [data-theme="dark"] .navbar { background: #0d1615 !important; border-bottom: 1px solid #1a2a27 !important; }
     [data-theme="dark"] .navbar .nav-links a { color: #e8f0ed !important; }
     [data-theme="dark"] .navbar .logo { color: #e8f0ed !important; }
@@ -223,9 +233,7 @@
       text-align: center;
     }
 
-    /* ============================================================
-       PRICING HERO - INCREASED HEIGHT
-       ============================================================ */
+    /* ===== PRICING HERO ===== */
     .pricing-hero {
       width: 100%;
       padding: 5rem 0 4rem;
@@ -292,9 +300,7 @@
       .pricing-hero h1 { font-size: 1.8rem; }
     }
 
-    /* ============================================================
-       PRICING CARDS - LEFT ALIGNED FEATURES
-       ============================================================ */
+    /* ===== PRICING CARDS ===== */
     .pricing-cards-section {
       background: var(--bg-primary);
       padding: 5rem 0;
@@ -305,6 +311,7 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 2rem;
       margin-top: 1.5rem;
+      align-items: stretch;
     }
     .pricing-card {
       background: var(--card-bg);
@@ -423,7 +430,6 @@
       box-shadow: 0 8px 20px rgba(58, 125, 107, 0.3);
     }
 
-    /* Popular card - warm color theme */
     .pricing-card.popular {
       border-color: var(--popular-color);
       box-shadow: 0 8px 32px rgba(212, 163, 115, 0.15);
@@ -462,15 +468,6 @@
       color: var(--popular-color);
     }
 
-    /* All cards have same button style - Shop Now */
-    .pricing-card .pricing-btn {
-      background: var(--accent);
-      color: #fff;
-    }
-    .pricing-card .pricing-btn:hover {
-      background: var(--accent-dark);
-    }
-
     @media (max-width: 992px) {
       .pricing-grid { grid-template-columns: repeat(2, 1fr); }
     }
@@ -480,11 +477,81 @@
       .pricing-card .pricing-features li .feature-text { font-size: 0.85rem; }
     }
 
-    /* ============================================================
-       COMPARE PLANS - TABLE
-       ============================================================ */
-    .compare-section {
+    /* ===== INCLUDED SECTION ===== */
+    .included-section {
       background: var(--section-bg);
+      padding: 5rem 0;
+      transition: background var(--transition);
+    }
+    .included-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+    .included-card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 2rem 1.8rem;
+      border: 1px solid var(--border-color);
+      transition: 0.3s ease;
+      box-shadow: 0 4px 16px var(--shadow);
+      display: flex;
+      flex-direction: column;
+    }
+    .included-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent);
+      box-shadow: 0 16px 40px var(--shadow);
+    }
+    .included-card h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.3rem;
+    }
+    .included-card .inc-price {
+      color: var(--accent);
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .included-card .inc-block {
+      margin-bottom: 1rem;
+    }
+    .included-card .inc-block h4 {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .included-card .inc-block ul {
+      list-style: none;
+      padding: 0;
+    }
+    .included-card .inc-block ul li {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      padding: 0.25rem 0 0.25rem 1.4rem;
+      position: relative;
+      line-height: 1.55;
+    }
+    .included-card .inc-block ul li::before {
+      content: '•';
+      position: absolute;
+      left: 0.2rem;
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 992px) { .included-grid { grid-template-columns: 1fr; max-width: 600px; margin: 1.5rem auto 0; } }
+
+    /* ===== COMPARE PLANS ===== */
+    .compare-section {
+      background: var(--bg-primary);
       padding: 5rem 0;
       transition: background var(--transition);
     }
@@ -533,9 +600,63 @@
       .compare-table-wrap td { padding: 0.7rem 0.8rem; font-size: 0.8rem; }
     }
 
-    /* ============================================================
-       WHY CHOOSE SECTION
-       ============================================================ */
+    /* ===== FAQ SECTION ===== */
+    .faq-section {
+      background: var(--section-bg);
+      padding: 5rem 0;
+      transition: background var(--transition);
+    }
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 1.6rem 1.8rem;
+      border: 1px solid var(--border-color);
+      transition: 0.3s ease;
+      box-shadow: 0 4px 12px var(--shadow);
+    }
+    .faq-item:hover {
+      border-color: var(--accent);
+      box-shadow: 0 12px 30px var(--shadow);
+    }
+    .faq-item .faq-q {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.6rem;
+    }
+    .faq-item .faq-q .faq-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: rgba(58, 125, 107, 0.1);
+      border-radius: 50%;
+      color: var(--accent);
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .faq-item .faq-a {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      padding-left: 44px;
+    }
+    @media (max-width: 700px) {
+      .faq-grid { grid-template-columns: 1fr; }
+      .faq-item .faq-a { padding-left: 0; margin-top: 0.4rem; }
+    }
+
+    /* ===== WHY CHOOSE ===== */
     .why-choose-section {
       background: var(--bg-primary);
       padding: 5rem 0;
@@ -586,9 +707,7 @@
       .why-item { padding: 1.5rem 1rem; }
     }
 
-    /* ============================================================
-       CTA
-       ============================================================ */
+    /* ===== CTA ===== */
     .pricing-cta {
       background: var(--bg-dark);
       border-radius: 32px;
@@ -697,9 +816,7 @@
       .pricing-cta .cta-btn-secondary { padding: 0.7rem 1.5rem; font-size: 0.85rem; }
     }
 
-    /* ============================================================
-       HAMBURGER & MOBILE NAV (EXACT COPY)
-       ============================================================ */
+    /* ===== HAMBURGER & MOBILE NAV ===== */
     .hamburger {
       display: none;
       flex-direction: column;
@@ -777,8 +894,6 @@
     }
     .mobile-auth .mobile-login { color: var(--accent); border: 2px solid var(--accent); background: transparent; }
     .mobile-auth .mobile-login:hover { background: var(--accent); color: #fff; }
-    .mobile-auth .mobile-signup { background: var(--accent); color: #fff; }
-    .mobile-auth .mobile-signup:hover { background: var(--accent-dark); }
 
     .mobile-actions { margin-top: 8px; gap: 8px; width: 100%; display: flex; flex-wrap: wrap; }
     .mobile-actions button {
@@ -799,9 +914,7 @@
       .hamburger { display: flex !important; }
     }
 
-    /* ============================================================
-       FOOTER (EXACT COPY)
-       ============================================================ */
+    /* ===== FOOTER ===== */
     footer {
       background: var(--bg-dark);
       color: var(--text-light);
@@ -893,10 +1006,21 @@
 </head>
 <body>
 
-  <!-- ===== NAVBAR (EXACT COPY) ===== -->
+  <!-- ===== NAVBAR ===== -->
   <nav class="navbar">
     <div class="container" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; width:100%; padding:0;">
-      <a href="index.html" class="logo"><i class="fas fa-utensils"></i>Ceram<span>ica</span></a>
+      <a href="index.html" class="logo">
+        <svg class="logo-mark" viewBox="0 0 40 40" width="34" height="34" xmlns="http://www.w3.org/2000/svg" fill="none">
+          <path d="M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z" fill="currentColor" fill-opacity="0.15"/>
+          <path d="M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M6 16h28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M16 16c0-3 1.8-5 4-5s4 2 4 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="20" cy="10" r="1.8" fill="currentColor"/>
+          <path d="M4 20h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M32 20h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        Ceram<span>ica</span>
+      </a>
       <ul class="nav-links">
         <li class="dropdown" id="homeDropdown">
           <a href="#" onclick="toggleDropdown(event)">Home <i class="fas fa-chevron-down" style="font-size:0.6rem;"></i></a>
@@ -919,8 +1043,7 @@
         <button class="toggle-btn" onclick="toggleTheme()" title="Toggle Dark/Light Mode" id="themeToggle">
           <i class="fas fa-moon"></i>
         </button>
-        <a href="login.html" class="login-btn"><i class="fas fa-sign-in-alt"></i> Login</a>
-        <a href="signup.html" class="signup-btn">Sign Up</a>
+        <a href="login.html" class="login-btn">Login</a>
       </div>
     </div>
   </nav>
@@ -933,7 +1056,18 @@
   <!-- ===== MOBILE NAV DRAWER ===== -->
   <div class="mobile-nav-drawer" id="mobileNav">
     <div class="drawer-header">
-      <a href="index.html" class="logo"><i class="fas fa-utensils"></i>Ceram<span>ica</span></a>
+      <a href="index.html" class="logo">
+        <svg class="logo-mark" viewBox="0 0 40 40" width="30" height="30" xmlns="http://www.w3.org/2000/svg" fill="none">
+          <path d="M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z" fill="currentColor" fill-opacity="0.15"/>
+          <path d="M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M6 16h28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M16 16c0-3 1.8-5 4-5s4 2 4 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="20" cy="10" r="1.8" fill="currentColor"/>
+          <path d="M4 20h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M32 20h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        Ceram<span>ica</span>
+      </a>
       <button class="close-drawer" onclick="closeMenu()">✕</button>
     </div>
     <ul>
@@ -949,7 +1083,6 @@
       <li><a href="contact.html">Contact</a></li>
       <li class="mobile-auth">
         <a href="login.html" class="mobile-login">Login</a>
-        <a href="signup.html" class="mobile-signup">Sign Up</a>
       </li>
       <li class="mobile-actions">
         <button onclick="toggleMobileRTL()" id="mobileRtlBtn">
@@ -965,9 +1098,7 @@
   <!-- ===== OVERLAY ===== -->
   <div class="nav-overlay" id="navOverlay" onclick="closeMenu()"></div>
 
-  <!-- ============================================================
-       PRICING HERO - INCREASED HEIGHT
-       ============================================================ -->
+  <!-- ===== PRICING HERO ===== -->
   <section class="pricing-hero">
     <div class="container">
       <span class="hero-badge"><i class="fas fa-tag"></i> Pricing</span>
@@ -976,14 +1107,11 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       PRICING CARDS - LEFT ALIGNED
-       ============================================================ -->
+  <!-- ===== PRICING CARDS ===== -->
   <section class="pricing-cards-section">
     <div class="container">
       <div class="pricing-grid">
 
-        <!-- Starter -->
         <div class="pricing-card">
           <span class="pricing-badge">Starter</span>
           <div class="pricing-name">Starter</div>
@@ -1000,7 +1128,6 @@
           <a href="products.html" class="pricing-btn">Shop Now</a>
         </div>
 
-        <!-- Everyday - Most Popular -->
         <div class="pricing-card popular">
           <span class="pricing-badge popular">★ Most Popular</span>
           <div class="pricing-name">Everyday</div>
@@ -1017,7 +1144,6 @@
           <a href="products.html" class="pricing-btn">Shop Now</a>
         </div>
 
-        <!-- Complete Kitchen -->
         <div class="pricing-card">
           <span class="pricing-badge">Complete Kitchen</span>
           <div class="pricing-name">Complete Kitchen</div>
@@ -1038,9 +1164,116 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       COMPARE PLANS - TABLE
-       ============================================================ -->
+  <!-- ===== WHAT'S INCLUDED ===== -->
+  <section class="included-section">
+    <div class="container">
+      <h2 class="section-title"><i class="fas fa-list-check"></i> What's Included in Each Set</h2>
+      <p class="section-subtitle">A detailed breakdown of every piece, material, and best use — so you know exactly what you're getting.</p>
+      <div class="included-grid">
+
+        <div class="included-card">
+          <h3>Starter Set</h3>
+          <div class="inc-price">₹2,499</div>
+          <div class="inc-block">
+            <h4>What's Inside</h4>
+            <ul>
+              <li>1× 3L Ceramic Dutch Oven</li>
+              <li>1× 24cm Ceramic Frying Pan</li>
+              <li>Recyclable gift packaging</li>
+            </ul>
+          </div>
+          <div class="inc-block">
+            <h4>Materials</h4>
+            <ul>
+              <li>100% lead-free ceramic</li>
+              <li>PFOA &amp; PTFE free coating</li>
+              <li>Food-grade natural glaze</li>
+            </ul>
+          </div>
+          <div class="inc-block">
+            <h4>Best For</h4>
+            <ul>
+              <li>First-time buyers</li>
+              <li>Small households &amp; singles</li>
+              <li>Everyday stovetop meals</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="included-card">
+          <h3>Everyday Set</h3>
+          <div class="inc-price">₹5,999</div>
+          <div class="inc-block">
+            <h4>What's Inside</h4>
+            <ul>
+              <li>1× 5L Ceramic Dutch Oven</li>
+              <li>1× 28cm Ceramic Frying Pan</li>
+              <li>1× 2L Ceramic Saucepan</li>
+              <li>1× Wooden Utensil Set (5 pcs)</li>
+              <li>1× Ceramic Baking Dish</li>
+              <li>Recyclable gift packaging</li>
+            </ul>
+          </div>
+          <div class="inc-block">
+            <h4>Materials</h4>
+            <ul>
+              <li>Premium grade ceramic</li>
+              <li>Beechwood utensils (FSC)</li>
+              <li>Scratch-resistant glaze</li>
+            </ul>
+          </div>
+          <div class="inc-block">
+            <h4>Best For</h4>
+            <ul>
+              <li>Couples &amp; small families</li>
+              <li>Daily cooking + baking</li>
+              <li>Weeknight dinners</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="included-card">
+          <h3>Complete Kitchen</h3>
+          <div class="inc-price">₹9,999</div>
+          <div class="inc-block">
+            <h4>What's Inside</h4>
+            <ul>
+              <li>1× 5L Ceramic Dutch Oven</li>
+              <li>1× 28cm Ceramic Frying Pan</li>
+              <li>1× 24cm Ceramic Skillet</li>
+              <li>1× 2L Ceramic Saucepan</li>
+              <li>1× Ceramic Baking Dish</li>
+              <li>1× Ceramic Pie Plate</li>
+              <li>1× Ceramic Loaf Pan</li>
+              <li>1× Wooden Utensil Set (7 pcs)</li>
+              <li>3× Ceramic Storage Canisters</li>
+              <li>1× Ceramic Serving Platter</li>
+              <li>Premium gift packaging</li>
+            </ul>
+          </div>
+          <div class="inc-block">
+            <h4>Materials</h4>
+            <ul>
+              <li>Premium grade ceramic</li>
+              <li>Solid beechwood utensils</li>
+              <li>Airtight bamboo lids on canisters</li>
+            </ul>
+          </div>
+          <div class="inc-block">
+            <h4>Best For</h4>
+            <ul>
+              <li>Large families</li>
+              <li>Wedding &amp; housewarming gifts</li>
+              <li>Complete kitchen upgrades</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== COMPARE PLANS ===== -->
   <section class="compare-section">
     <div class="container">
       <h2 class="section-title"><i class="fas fa-table"></i> Compare Plans</h2>
@@ -1110,9 +1343,48 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       WHY CHOOSE SECTION
-       ============================================================ -->
+  <!-- ===== FAQ ===== -->
+  <section class="faq-section">
+    <div class="container">
+      <h2 class="section-title"><i class="fas fa-circle-question"></i> Pricing &amp; Order FAQs</h2>
+      <p class="section-subtitle">Everything you need to know before you order your Ceramica set.</p>
+      <div class="faq-grid">
+
+        <div class="faq-item">
+          <div class="faq-q"><span class="faq-icon"><i class="fas fa-indian-rupee-sign"></i></span> Are the prices inclusive of taxes?</div>
+          <div class="faq-a">Yes. All listed prices include GST. There are no hidden charges — the price you see is the price you pay, with free shipping on every order.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q"><span class="faq-icon"><i class="fas fa-truck"></i></span> How long does shipping take?</div>
+          <div class="faq-a">Standard delivery is 3–5 business days across India. Metro cities typically receive orders in 2–3 days. Every order is tracked and delivered with care packaging.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q"><span class="faq-icon"><i class="fas fa-shield-alt"></i></span> Is there a warranty on the sets?</div>
+          <div class="faq-a">Yes. All cookware comes with a 1-year limited warranty against manufacturing defects. The Complete Kitchen Set includes an extended 2-year warranty.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q"><span class="faq-icon"><i class="fas fa-undo"></i></span> What is the return &amp; exchange policy?</div>
+          <div class="faq-a">You can return or exchange any unused item within 30 days of delivery. Just keep the original packaging and reach out to our support team for a free pickup.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q"><span class="faq-icon"><i class="fas fa-spa"></i></span> How do I care for ceramic cookware?</div>
+          <div class="faq-a">Hand wash with warm soapy water and a soft sponge. Avoid metal utensils to preserve the glaze. All our pieces are dishwasher safe, but hand washing keeps them looking new for years.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q"><span class="faq-icon"><i class="fas fa-gift"></i></span> Do you offer bulk or gift orders?</div>
+          <div class="faq-a">Yes! For orders of 5+ sets — weddings, corporate gifting, or resale — contact us for special pricing and custom packaging. Our team responds within 24 hours.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WHY CHOOSE ===== -->
   <section class="why-choose-section">
     <div class="container">
       <h2 class="section-title"><i class="fas fa-heart"></i> Why Choose Our Sets</h2>
@@ -1142,9 +1414,7 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       CTA
-       ============================================================ -->
+  <!-- ===== CTA ===== -->
   <div class="container">
     <div class="pricing-cta">
       <span class="cta-icon"><i class="fas fa-utensils"></i></span>
@@ -1161,12 +1431,21 @@
     </div>
   </div>
 
-  <!-- ===== FOOTER (EXACT COPY) ===== -->
+  <!-- ===== FOOTER ===== -->
   <footer>
     <div class="footer-container">
       <div class="footer-box">
         <a href="index.html" class="footer-logo-link" onclick="scrollToTop()">
-          <i class="fas fa-utensils"></i>Ceram<span>ica</span>
+          <svg class="logo-mark" viewBox="0 0 40 40" width="34" height="34" xmlns="http://www.w3.org/2000/svg" fill="none">
+            <path d="M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z" fill="currentColor" fill-opacity="0.15"/>
+            <path d="M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M6 16h28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M16 16c0-3 1.8-5 4-5s4 2 4 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="20" cy="10" r="1.8" fill="currentColor"/>
+            <path d="M4 20h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M32 20h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          Ceram<span>ica</span>
         </a>
         <p>Your destination for premium ceramic cookware, bakeware, and kitchen tools. Crafted for warmth, durability, and timeless style.</p>
       </div>
@@ -1181,7 +1460,7 @@
       <div class="footer-box">
         <h2>Contact</h2>
         <p><i class="fas fa-map-marker-alt"></i> 27 Baker St, London</p>
-        <p><i class="fas fa-phone-alt"></i> +44 (20) 7946 0138</p>
+        <p><i class="fas fa-phone"></i> +44 (20) 7946 0138</p>
         <p><i class="fas fa-envelope"></i> hello@ceramica.com</p>
         <p><i class="fas fa-clock"></i> Mon - Sat : 9AM - 8PM</p>
       </div>
@@ -1203,9 +1482,8 @@
     <p class="copy">© 2026 <span>Ceramica</span>. All Rights Reserved. Made for the heart of your home.</p>
   </footer>
 
-  <!-- ===== JAVASCRIPT (EXACT COPY) ===== -->
+  <!-- ===== JAVASCRIPT ===== -->
   <script>
-    // ===== DROPDOWN TOGGLE =====
     let dropdownOpen = false;
     function toggleDropdown(e) {
       e.preventDefault(); e.stopPropagation();
@@ -1221,8 +1499,10 @@
       }
     });
 
-    // ===== THEME TOGGLE =====
-    let darkMode = false;
+    /* ===== THEME + RTL PERSISTENCE ===== */
+    let darkMode = localStorage.getItem('ceramica-theme') === 'dark';
+    let rtlMode = localStorage.getItem('ceramica-rtl') === 'rtl';
+
     function toggleTheme() {
       darkMode = !darkMode;
       const themeIcon = document.getElementById('themeToggle').querySelector('i');
@@ -1230,11 +1510,13 @@
       const mobileThemeLabel = document.getElementById('mobileThemeLabel');
       if (darkMode) {
         document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('ceramica-theme', 'dark');
         themeIcon.className = 'fas fa-sun';
         if (mobileThemeIcon) mobileThemeIcon.className = 'fas fa-sun';
         if (mobileThemeLabel) mobileThemeLabel.textContent = 'Light';
       } else {
         document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('ceramica-theme', 'light');
         themeIcon.className = 'fas fa-moon';
         if (mobileThemeIcon) mobileThemeIcon.className = 'fas fa-moon';
         if (mobileThemeLabel) mobileThemeLabel.textContent = 'Dark';
@@ -1242,25 +1524,24 @@
     }
     function toggleMobileTheme() { toggleTheme(); }
 
-    // ===== RTL TOGGLE =====
-    let rtlMode = false;
     function toggleRTL() {
       rtlMode = !rtlMode;
       const rtlBtn = document.getElementById('rtlBtn');
       const mobileRtlLabel = document.getElementById('mobileRtlLabel');
       if (rtlMode) {
         document.documentElement.setAttribute('dir', 'rtl');
+        localStorage.setItem('ceramica-rtl', 'rtl');
         if (rtlBtn) rtlBtn.textContent = 'LTR';
         if (mobileRtlLabel) mobileRtlLabel.textContent = 'LTR';
       } else {
         document.documentElement.removeAttribute('dir');
+        localStorage.setItem('ceramica-rtl', 'ltr');
         if (rtlBtn) rtlBtn.textContent = 'RTL';
         if (mobileRtlLabel) mobileRtlLabel.textContent = 'RTL';
       }
     }
     function toggleMobileRTL() { toggleRTL(); }
 
-    // ===== MOBILE MENU =====
     function toggleMenu(open) {
       const hamburger = document.getElementById('hamburger');
       const mobileNav = document.getElementById('mobileNav');
@@ -1291,8 +1572,23 @@
       link.addEventListener('click', function() { if (!this.classList.contains('dropdown-toggle')) { closeMenu(); } });
     });
 
-    // ===== SCROLL TO TOP =====
     function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+    window.addEventListener('load', function() {
+      if (document.documentElement.getAttribute('data-theme') === 'dark') {
+        document.getElementById('themeToggle').querySelector('i').className = 'fas fa-sun';
+        const mi = document.getElementById('mobileThemeIcon');
+        const ml = document.getElementById('mobileThemeLabel');
+        if (mi) mi.className = 'fas fa-sun';
+        if (ml) ml.textContent = 'Light';
+      }
+      if (document.documentElement.getAttribute('dir') === 'rtl') {
+        const rb = document.getElementById('rtlBtn');
+        const mrl = document.getElementById('mobileRtlLabel');
+        if (rb) rb.textContent = 'LTR';
+        if (mrl) mrl.textContent = 'LTR';
+      }
+    });
   </script>
 
 </body>

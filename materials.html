@@ -4,11 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
   <title>Ceramica · Materials Guide</title>
-  <link rel="icon" type="image/jpeg" href="images/gift-hero.jpg">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40' fill='none'%3E%3Cpath d='M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z' fill='%233a7d6b' fill-opacity='0.2'/%3E%3Cpath d='M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z' stroke='%233a7d6b' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M6 16h28' stroke='%233a7d6b' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M16 16c0-3 1.8-5 4-5s4 2 4 5' stroke='%233a7d6b' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='20' cy='10' r='1.8' fill='%233a7d6b'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script>
+    /* Prevent theme flash on page load */
+    (function() {
+      try {
+        if (localStorage.getItem('ceramica-theme') === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+        if (localStorage.getItem('ceramica-rtl') === 'rtl') {
+          document.documentElement.setAttribute('dir', 'rtl');
+        }
+      } catch(e) {}
+    })();
+  </script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -80,6 +93,17 @@
       display: flex;
       align-items: center;
       gap: 4px;
+    }
+
+    .logo .logo-mark,
+    .footer-logo-link .logo-mark {
+      color: var(--accent);
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+    .logo:hover .logo-mark,
+    .footer-logo-link:hover .logo-mark {
+      transform: rotate(-6deg);
     }
 
     .logo span, .footer-logo-link span { color: var(--accent); font-weight: 300; }
@@ -178,20 +202,6 @@
       text-decoration: none;
     }
     .nav-controls .login-btn:hover { background: var(--accent-dark); transform: translateY(-2px); }
-
-    .nav-controls .signup-btn {
-      background: transparent;
-      color: var(--accent);
-      border: 2px solid var(--accent);
-      padding: 0.45rem 1.2rem;
-      border-radius: 60px;
-      font-weight: 600;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: 0.2s;
-      text-decoration: none;
-    }
-    .nav-controls .signup-btn:hover { background: var(--accent); color: #fff; }
 
     [data-theme="dark"] .navbar { background: #0d1615 !important; border-bottom: 1px solid #1a2a27 !important; }
     [data-theme="dark"] .navbar .nav-links a { color: #e8f0ed !important; }
@@ -305,22 +315,18 @@
       .materials-hero .hero-icons .icon-item span { font-size: 0.7rem; }
     }
 
-      /* ===== MATERIALS GUIDE ===== */
-    .materials-guide {
-      background: var(--bg-primary);
-      padding: 5rem 0;
-      transition: background var(--transition);
-    }
+        /* ===== MATERIALS GUIDE - EVEN CARD HEIGHTS ===== */
     .materials-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 2.5rem;
       margin-top: 1.5rem;
+      align-items: stretch;
     }
     .material-card {
       background: var(--card-bg);
       border-radius: 32px;
-      padding: 0 0 0 0;
+      padding: 0;
       border: 1px solid var(--border-color);
       transition: 0.35s ease;
       box-shadow: 0 4px 16px var(--shadow);
@@ -360,8 +366,9 @@
       transition: transform 0.5s ease;
     }
     .material-card:hover .material-img img { transform: scale(1.05); }
+
     .material-card .material-body {
-      padding: 1.8rem 1.8rem 0;
+      padding: 1.8rem 1.8rem 1.8rem;
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -392,17 +399,20 @@
       margin-bottom: 1rem;
       padding: 0 0.5rem;
       flex-shrink: 0;
+      min-height: 120px;
     }
     .material-card .material-features {
       text-align: left;
-      padding-left: 2rem;
-      margin-bottom: 1.5rem;
-      flex: 1;
+      padding-left: 0;
+      margin-bottom: 1rem;
+      list-style: none;
+      flex-shrink: 0;
+      min-height: 130px;
     }
     .material-card .material-features li {
       color: var(--text-secondary);
       font-size: 0.9rem;
-      line-height: 1.8;
+      line-height: 1.9;
       list-style: none;
       position: relative;
       padding-left: 1.5rem;
@@ -414,12 +424,56 @@
       color: var(--accent);
       font-weight: 700;
     }
+
+    .material-card .material-options {
+      text-align: left;
+      background: rgba(58, 125, 107, 0.06);
+      border-radius: 14px;
+      padding: 1.1rem 1.2rem;
+      margin-bottom: 1.4rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      min-height: 190px;
+    }
+    .material-card .material-options h4 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+    .material-card .material-options .opt-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      padding: 0.3rem 0;
+      line-height: 1.5;
+      border-bottom: 1px dashed rgba(58, 125, 107, 0.15);
+    }
+    .material-card .material-options .opt-row:last-child {
+      border-bottom: none;
+    }
+    .material-card .material-options .opt-row span:first-child {
+      font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .material-card .material-options .opt-row span:last-child {
+      text-align: right;
+    }
+
     .material-card .material-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 0.6rem 1.8rem;
+      padding: 0.65rem 1.8rem;
       border-radius: 60px;
       background: var(--accent);
       color: #fff;
@@ -430,10 +484,9 @@
       border: none;
       cursor: pointer;
       margin-top: auto;
-      margin-bottom: 1.8rem;
       width: fit-content;
       align-self: center;
-      min-width: 160px;
+      min-width: 170px;
     }
     .material-card .material-btn:hover {
       background: var(--accent-dark);
@@ -442,15 +495,125 @@
 
     @media (max-width: 992px) {
       .materials-grid { grid-template-columns: repeat(2, 1fr); }
+      .material-card .material-desc { min-height: auto; }
+      .material-card .material-features { min-height: auto; }
+      .material-card .material-options { min-height: 170px; }
     }
     @media (max-width: 700px) {
       .materials-grid { grid-template-columns: 1fr; max-width: 450px; margin: 1.5rem auto 0; }
       .material-card .material-img { height: 180px; }
       .material-card .material-btn { min-width: 140px; }
+      .material-card .material-desc { min-height: auto; }
+      .material-card .material-features { min-height: auto; }
+      .material-card .material-options { min-height: auto; }
     }
+
+    /* ===== WHICH MATERIAL ===== */
+    .which-section {
+      background: var(--section-bg);
+      padding: 5rem 0;
+      transition: background var(--transition);
+    }
+    .which-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+    .which-card {
+      background: var(--card-bg);
+      border-radius: 28px;
+      padding: 2.2rem 1.8rem;
+      border: 1px solid var(--border-color);
+      transition: 0.35s ease;
+      box-shadow: 0 4px 16px var(--shadow);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+    }
+    .which-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px var(--shadow);
+      border-color: var(--accent);
+    }
+    .which-card .which-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 68px;
+      height: 68px;
+      background: rgba(58, 125, 107, 0.1);
+      border-radius: 20px;
+      color: var(--accent);
+      font-size: 1.8rem;
+      margin: 0 auto 1rem;
+    }
+    .which-card h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+    .which-card .which-tag {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 0.15rem 0.9rem;
+      border-radius: 60px;
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.8rem;
+      align-self: center;
+    }
+    .which-card p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-bottom: 0.8rem;
+    }
+    .which-card ul {
+      list-style: none;
+      padding: 0;
+      text-align: left;
+      margin-bottom: 1rem;
+      flex: 1;
+    }
+    .which-card ul li {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      line-height: 1.9;
+      padding-left: 1.4rem;
+      position: relative;
+    }
+    .which-card ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .which-card .which-cta {
+      display: inline-block;
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: 0.2s;
+      margin-top: auto;
+    }
+    .which-card .which-cta:hover { color: var(--accent-dark); }
+    .which-card .which-cta i { transition: 0.2s; }
+    .which-card .which-cta:hover i { transform: translateX(4px); }
+
+    @media (max-width: 992px) {
+      .which-grid { grid-template-columns: 1fr; max-width: 500px; margin: 1.5rem auto 0; }
+    }
+
     /* ===== COMPARISON TABLE ===== */
     .comparison-section {
-      background: var(--section-bg);
+      background: var(--bg-primary);
       padding: 5rem 0;
       transition: background var(--transition);
     }
@@ -496,7 +659,58 @@
       .comparison-table-wrap td { padding: 0.7rem 0.8rem; font-size: 0.8rem; }
     }
 
-     /* ===== CARE TIPS ===== */
+    /* ===== BUYING GUIDE ===== */
+    .buying-section {
+      background: var(--section-bg);
+      padding: 5rem 0;
+      transition: background var(--transition);
+    }
+    .buying-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+    .buying-card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 2rem 1.5rem;
+      border: 1px solid var(--border-color);
+      transition: 0.3s ease;
+      text-align: center;
+    }
+    .buying-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px var(--shadow);
+      border-color: var(--accent);
+    }
+    .buying-card .buy-num {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      width: 42px;
+      height: 42px;
+      line-height: 42px;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 0.9rem;
+    }
+    .buying-card h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.4rem;
+    }
+    .buying-card p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    @media (max-width: 992px) { .buying-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 500px) { .buying-grid { grid-template-columns: 1fr; gap: 1rem; } }
+
+    /* ===== CARE TIPS ===== */
     .care-tips-section {
       background: var(--bg-primary);
       padding: 5rem 0;
@@ -746,8 +960,6 @@
     }
     .mobile-auth .mobile-login { color: var(--accent); border: 2px solid var(--accent); background: transparent; }
     .mobile-auth .mobile-login:hover { background: var(--accent); color: #fff; }
-    .mobile-auth .mobile-signup { background: var(--accent); color: #fff; }
-    .mobile-auth .mobile-signup:hover { background: var(--accent-dark); }
 
     .mobile-actions { margin-top: 8px; gap: 8px; width: 100%; display: flex; flex-wrap: wrap; }
     .mobile-actions button {
@@ -863,7 +1075,18 @@
   <!-- ===== NAVBAR ===== -->
   <nav class="navbar">
     <div class="container" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; width:100%; padding:0;">
-      <a href="index.html" class="logo"><i class="fas fa-utensils"></i>Ceram<span>ica</span></a>
+      <a href="index.html" class="logo">
+        <svg class="logo-mark" viewBox="0 0 40 40" width="34" height="34" xmlns="http://www.w3.org/2000/svg" fill="none">
+          <path d="M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z" fill="currentColor" fill-opacity="0.15"/>
+          <path d="M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M6 16h28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M16 16c0-3 1.8-5 4-5s4 2 4 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="20" cy="10" r="1.8" fill="currentColor"/>
+          <path d="M4 20h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M32 20h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        Ceram<span>ica</span>
+      </a>
       <ul class="nav-links">
         <li class="dropdown" id="homeDropdown">
           <a href="#" onclick="toggleDropdown(event)">Home <i class="fas fa-chevron-down" style="font-size:0.6rem;"></i></a>
@@ -886,8 +1109,7 @@
         <button class="toggle-btn" onclick="toggleTheme()" title="Toggle Dark/Light Mode" id="themeToggle">
           <i class="fas fa-moon"></i>
         </button>
-        <a href="login.html" class="login-btn"><i class="fas fa-sign-in-alt"></i> Login</a>
-        <a href="signup.html" class="signup-btn">Sign Up</a>
+        <a href="login.html" class="login-btn"> Login</a>
       </div>
     </div>
   </nav>
@@ -900,7 +1122,18 @@
   <!-- ===== MOBILE NAV DRAWER ===== -->
   <div class="mobile-nav-drawer" id="mobileNav">
     <div class="drawer-header">
-      <a href="index.html" class="logo"><i class="fas fa-utensils"></i>Ceram<span>ica</span></a>
+      <a href="index.html" class="logo">
+        <svg class="logo-mark" viewBox="0 0 40 40" width="30" height="30" xmlns="http://www.w3.org/2000/svg" fill="none">
+          <path d="M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z" fill="currentColor" fill-opacity="0.15"/>
+          <path d="M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M6 16h28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M16 16c0-3 1.8-5 4-5s4 2 4 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="20" cy="10" r="1.8" fill="currentColor"/>
+          <path d="M4 20h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M32 20h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        Ceram<span>ica</span>
+      </a>
       <button class="close-drawer" onclick="closeMenu()">✕</button>
     </div>
     <ul>
@@ -916,7 +1149,6 @@
       <li><a href="contact.html">Contact</a></li>
       <li class="mobile-auth">
         <a href="login.html" class="mobile-login">Login</a>
-        <a href="signup.html" class="mobile-signup">Sign Up</a>
       </li>
       <li class="mobile-actions">
         <button onclick="toggleMobileRTL()" id="mobileRtlBtn">
@@ -959,7 +1191,7 @@
   <section class="materials-guide">
     <div class="container">
       <h2 class="section-title"><i class="fas fa-info-circle"></i> Material Deep Dive</h2>
-      <p class="section-subtitle">Everything you need to know about ceramic, cast iron, and stainless steel.</p>
+      <p class="section-subtitle">Everything you need to know about ceramic, cast iron, and stainless steel — features, options, and what to expect.</p>
       <div class="materials-grid">
 
         <div class="material-card">
@@ -969,14 +1201,20 @@
           <div class="material-body">
             <h3>Ceramic</h3>
             <span class="material-badge">Our Signature</span>
-            <p class="material-desc">Non-toxic, naturally non-stick, and beautifully crafted. Ceramic cookware is our specialty — offering even heat distribution and a timeless aesthetic.</p>
+            <p class="material-desc">Non-toxic, naturally non-stick, and beautifully crafted. Ceramic cookware is our specialty — offering even heat distribution and a timeless aesthetic that looks as good as it cooks.</p>
             <ul class="material-features">
               <li>100% PFOA &amp; lead-free</li>
               <li>Naturally non-stick surface</li>
               <li>Even heat distribution</li>
               <li>Oven &amp; dishwasher safe</li>
-              <li>Available in earthy tones</li>
             </ul>
+            <div class="material-options">
+              <h4>Available Options</h4>
+              <div class="opt-row"><span>Sizes</span><span>1.5L · 3L · 5L</span></div>
+              <div class="opt-row"><span>Finishes</span><span>Matte · Glossy</span></div>
+              <div class="opt-row"><span>Colors</span><span>Sage · Cream · Clay</span></div>
+              <div class="opt-row"><span>Heat Safe</span><span>Up to 450°F</span></div>
+            </div>
             <a href="products.html" class="material-btn">Shop Ceramic <i class="fas fa-arrow-right"></i></a>
           </div>
         </div>
@@ -988,14 +1226,20 @@
           <div class="material-body">
             <h3>Cast Iron</h3>
             <span class="material-badge">Classic Choice</span>
-            <p class="material-desc">Exceptional heat retention and durability. Cast iron is perfect for slow cooking, searing, and baking — a true kitchen workhorse.</p>
+            <p class="material-desc">Exceptional heat retention and durability. Cast iron is perfect for slow cooking, searing, and baking — a true kitchen workhorse that lasts generations.</p>
             <ul class="material-features">
               <li>Superior heat retention</li>
-              <li>Versatile for all cooking methods</li>
+              <li>Versatile for all cooking</li>
               <li>Develops natural seasoning</li>
               <li>Oven &amp; stovetop safe</li>
-              <li>Heirloom quality</li>
             </ul>
+            <div class="material-options">
+              <h4>Available Options</h4>
+              <div class="opt-row"><span>Sizes</span><span>8" · 10" · 12"</span></div>
+              <div class="opt-row"><span>Finishes</span><span>Pre-seasoned · Enameled</span></div>
+              <div class="opt-row"><span>Colors</span><span>Black · Cream · Red</span></div>
+              <div class="opt-row"><span>Heat Safe</span><span>Up to 600°F</span></div>
+            </div>
             <a href="products.html" class="material-btn">Shop Cast Iron <i class="fas fa-arrow-right"></i></a>
           </div>
         </div>
@@ -1007,18 +1251,70 @@
           <div class="material-body">
             <h3>Stainless Steel</h3>
             <span class="material-badge">Modern Essential</span>
-            <p class="material-desc">Durable, sleek, and built to last. Stainless steel offers excellent heat conduction and is resistant to rust, stains, and corrosion.</p>
+            <p class="material-desc">Durable, sleek, and built to last. Stainless steel offers excellent heat conduction and is resistant to rust, stains, and corrosion — the modern kitchen staple.</p>
             <ul class="material-features">
               <li>Durable &amp; long-lasting</li>
               <li>Rust &amp; stain resistant</li>
               <li>Excellent heat conduction</li>
               <li>Oven safe up to 500°F</li>
-              <li>Modern, sleek design</li>
             </ul>
+            <div class="material-options">
+              <h4>Available Options</h4>
+              <div class="opt-row"><span>Sizes</span><span>1L · 2L · 4L</span></div>
+              <div class="opt-row"><span>Bases</span><span>Tri-ply · Copper core</span></div>
+              <div class="opt-row"><span>Finishes</span><span>Brushed · Mirror</span></div>
+              <div class="opt-row"><span>Heat Safe</span><span>Up to 500°F</span></div>
+            </div>
             <a href="products.html" class="material-btn">Shop Stainless Steel <i class="fas fa-arrow-right"></i></a>
           </div>
         </div>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WHICH MATERIAL ===== -->
+  <section class="which-section">
+    <div class="container">
+      <h2 class="section-title"><i class="fas fa-lightbulb"></i> Which Material Is Right for You?</h2>
+      <p class="section-subtitle">Match your cooking style to the perfect material.</p>
+      <div class="which-grid">
+        <div class="which-card">
+          <span class="which-icon"><i class="fas fa-utensils"></i></span>
+          <h3>Everyday Cooking</h3>
+          <span class="which-tag">Best: Ceramic</span>
+          <p>If you cook daily and want easy cleanup with healthy, non-toxic surfaces — ceramic is your best friend.</p>
+          <ul>
+            <li>Quick weeknight meals</li>
+            <li>Eggs, veggies, sauces</li>
+            <li>Low-oil cooking</li>
+          </ul>
+          <a href="products.html" class="which-cta">Shop Ceramic <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="which-card">
+          <span class="which-icon"><i class="fas fa-fire"></i></span>
+          <h3>Searing &amp; Slow Cooking</h3>
+          <span class="which-tag">Best: Cast Iron</span>
+          <p>For deep flavor, perfect crusts, and slow braises — nothing beats the heat retention of cast iron.</p>
+          <ul>
+            <li>Steaks &amp; roasts</li>
+            <li>Stews &amp; braises</li>
+            <li>Campfire &amp; oven bakes</li>
+          </ul>
+          <a href="products.html" class="which-cta">Shop Cast Iron <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="which-card">
+          <span class="which-icon"><i class="fas fa-shield-alt"></i></span>
+          <h3>All-Purpose Cooking</h3>
+          <span class="which-tag">Best: Stainless Steel</span>
+          <p>When you need one pan for everything — sauces, pasta, frying — stainless steel is reliable and easy.</p>
+          <ul>
+            <li>Pasta &amp; boiling</li>
+            <li>Sauces &amp; reductions</li>
+            <li>High-heat frying</li>
+          </ul>
+          <a href="products.html" class="which-cta">Shop Stainless <i class="fas fa-arrow-right"></i></a>
+        </div>
       </div>
     </div>
   </section>
@@ -1081,16 +1377,43 @@
     </div>
   </section>
 
-   <!-- ============================================================
-       CARE TIPS - SEPARATE SECTION (Using Emoji Checkmarks)
-       ============================================================ -->
+  <!-- ===== BUYING GUIDE ===== -->
+  <section class="buying-section">
+    <div class="container">
+      <h2 class="section-title"><i class="fas fa-shopping-bag"></i> Buying Guide</h2>
+      <p class="section-subtitle">Four things to check before you buy any cookware.</p>
+      <div class="buying-grid">
+        <div class="buying-card">
+          <span class="buy-num">01</span>
+          <h4>Check the Base</h4>
+          <p>A thick, flat base ensures even heating and prevents hot spots. Tri-ply or copper-core bases conduct heat best.</p>
+        </div>
+        <div class="buying-card">
+          <span class="buy-num">02</span>
+          <h4>Match Your Stovetop</h4>
+          <p>Induction? Look for magnetic bases. Gas? Almost anything works. Electric? Flat bottoms matter most.</p>
+        </div>
+        <div class="buying-card">
+          <span class="buy-num">03</span>
+          <h4>Consider Weight</h4>
+          <p>Lighter pieces are easier for daily use. Heavier ones hold heat better but can be tiring to handle.</p>
+        </div>
+        <div class="buying-card">
+          <span class="buy-num">04</span>
+          <h4>Check Safety Certifications</h4>
+          <p>Look for PFOA-free, lead-free, and food-safe certifications — especially for ceramic and non-stick pieces.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CARE TIPS ===== -->
   <section class="care-tips-section">
     <div class="container">
       <h2 class="section-title"><i class="fas fa-spa"></i> Material Care Tips</h2>
       <p class="section-subtitle">Keep your cookware in perfect condition with these simple care guidelines.</p>
       <div class="care-tips-grid">
 
-        <!-- Ceramic Care -->
         <div class="care-tip-card">
           <span class="care-icon"><i class="fas fa-gem"></i></span>
           <h4>Ceramic</h4>
@@ -1103,7 +1426,6 @@
           </ul>
         </div>
 
-        <!-- Cast Iron Care -->
         <div class="care-tip-card">
           <span class="care-icon"><i class="fas fa-cog"></i></span>
           <h4>Cast Iron</h4>
@@ -1116,7 +1438,6 @@
           </ul>
         </div>
 
-        <!-- Stainless Steel Care -->
         <div class="care-tip-card">
           <span class="care-icon"><i class="fas fa-shield-alt"></i></span>
           <h4>Stainless Steel</h4>
@@ -1154,7 +1475,16 @@
     <div class="footer-container">
       <div class="footer-box">
         <a href="index.html" class="footer-logo-link" onclick="scrollToTop()">
-          <i class="fas fa-utensils"></i>Ceram<span>ica</span>
+          <svg class="logo-mark" viewBox="0 0 40 40" width="34" height="34" xmlns="http://www.w3.org/2000/svg" fill="none">
+            <path d="M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z" fill="currentColor" fill-opacity="0.15"/>
+            <path d="M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M6 16h28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M16 16c0-3 1.8-5 4-5s4 2 4 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="20" cy="10" r="1.8" fill="currentColor"/>
+            <path d="M4 20h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M32 20h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          Ceram<span>ica</span>
         </a>
         <p>Your destination for premium ceramic cookware, bakeware, and kitchen tools. Crafted for warmth, durability, and timeless style.</p>
       </div>
@@ -1169,7 +1499,7 @@
       <div class="footer-box">
         <h2>Contact</h2>
         <p><i class="fas fa-map-marker-alt"></i> 27 Baker St, London</p>
-        <p><i class="fas fa-phone-alt"></i> +44 (20) 7946 0138</p>
+        <p><i class="fas fa-phone"></i> +44 (20) 7946 0138</p>
         <p><i class="fas fa-envelope"></i> hello@ceramica.com</p>
         <p><i class="fas fa-clock"></i> Mon - Sat : 9AM - 8PM</p>
       </div>
@@ -1208,7 +1538,10 @@
       }
     });
 
-    let darkMode = false;
+    /* ===== THEME + RTL PERSISTENCE ===== */
+    let darkMode = localStorage.getItem('ceramica-theme') === 'dark';
+    let rtlMode = localStorage.getItem('ceramica-rtl') === 'rtl';
+
     function toggleTheme() {
       darkMode = !darkMode;
       const themeIcon = document.getElementById('themeToggle').querySelector('i');
@@ -1216,11 +1549,13 @@
       const mobileThemeLabel = document.getElementById('mobileThemeLabel');
       if (darkMode) {
         document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('ceramica-theme', 'dark');
         themeIcon.className = 'fas fa-sun';
         if (mobileThemeIcon) mobileThemeIcon.className = 'fas fa-sun';
         if (mobileThemeLabel) mobileThemeLabel.textContent = 'Light';
       } else {
         document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('ceramica-theme', 'light');
         themeIcon.className = 'fas fa-moon';
         if (mobileThemeIcon) mobileThemeIcon.className = 'fas fa-moon';
         if (mobileThemeLabel) mobileThemeLabel.textContent = 'Dark';
@@ -1228,17 +1563,18 @@
     }
     function toggleMobileTheme() { toggleTheme(); }
 
-    let rtlMode = false;
     function toggleRTL() {
       rtlMode = !rtlMode;
       const rtlBtn = document.getElementById('rtlBtn');
       const mobileRtlLabel = document.getElementById('mobileRtlLabel');
       if (rtlMode) {
         document.documentElement.setAttribute('dir', 'rtl');
+        localStorage.setItem('ceramica-rtl', 'rtl');
         if (rtlBtn) rtlBtn.textContent = 'LTR';
         if (mobileRtlLabel) mobileRtlLabel.textContent = 'LTR';
       } else {
         document.documentElement.removeAttribute('dir');
+        localStorage.setItem('ceramica-rtl', 'ltr');
         if (rtlBtn) rtlBtn.textContent = 'RTL';
         if (mobileRtlLabel) mobileRtlLabel.textContent = 'RTL';
       }
@@ -1276,6 +1612,22 @@
     });
 
     function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+    window.addEventListener('load', function() {
+      if (document.documentElement.getAttribute('data-theme') === 'dark') {
+        document.getElementById('themeToggle').querySelector('i').className = 'fas fa-sun';
+        const mi = document.getElementById('mobileThemeIcon');
+        const ml = document.getElementById('mobileThemeLabel');
+        if (mi) mi.className = 'fas fa-sun';
+        if (ml) ml.textContent = 'Light';
+      }
+      if (document.documentElement.getAttribute('dir') === 'rtl') {
+        const rb = document.getElementById('rtlBtn');
+        const mrl = document.getElementById('mobileRtlLabel');
+        if (rb) rb.textContent = 'LTR';
+        if (mrl) mrl.textContent = 'LTR';
+      }
+    });
   </script>
 
 </body>

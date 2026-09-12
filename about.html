@@ -4,11 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
   <title>Ceramica · About Us</title>
-  <link rel="icon" type="image/jpeg" href="images/gift-hero.jpg">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40' fill='none'%3E%3Cpath d='M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z' fill='%233a7d6b' fill-opacity='0.2'/%3E%3Cpath d='M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z' stroke='%233a7d6b' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M6 16h28' stroke='%233a7d6b' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M16 16c0-3 1.8-5 4-5s4 2 4 5' stroke='%233a7d6b' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='20' cy='10' r='1.8' fill='%233a7d6b'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script>
+    /* Prevent theme flash on page load */
+    (function() {
+      try {
+        if (localStorage.getItem('ceramica-theme') === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+        if (localStorage.getItem('ceramica-rtl') === 'rtl') {
+          document.documentElement.setAttribute('dir', 'rtl');
+        }
+      } catch(e) {}
+    })();
+  </script>
   <style>
     /* ===== RESET & BASE ===== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -56,7 +69,7 @@
 
     .container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
 
-    /* ===== NAVBAR (EXACT COPY) ===== */
+    /* ===== NAVBAR ===== */
     .navbar {
       display: flex;
       flex-wrap: wrap;
@@ -81,6 +94,18 @@
       display: flex;
       align-items: center;
       gap: 4px;
+    }
+
+    /* ===== NEW LOGO MARK (added) ===== */
+    .logo .logo-mark,
+    .footer-logo-link .logo-mark {
+      color: var(--accent);
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+    .logo:hover .logo-mark,
+    .footer-logo-link:hover .logo-mark {
+      transform: rotate(-6deg);
     }
 
     .logo span, .footer-logo-link span { color: var(--accent); font-weight: 300; }
@@ -180,20 +205,6 @@
     }
     .nav-controls .login-btn:hover { background: var(--accent-dark); transform: translateY(-2px); }
 
-    .nav-controls .signup-btn {
-      background: transparent;
-      color: var(--accent);
-      border: 2px solid var(--accent);
-      padding: 0.45rem 1.2rem;
-      border-radius: 60px;
-      font-weight: 600;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: 0.2s;
-      text-decoration: none;
-    }
-    .nav-controls .signup-btn:hover { background: var(--accent); color: #fff; }
-
     [data-theme="dark"] .navbar { background: #0d1615 !important; border-bottom: 1px solid #1a2a27 !important; }
     [data-theme="dark"] .navbar .nav-links a { color: #e8f0ed !important; }
     [data-theme="dark"] .navbar .logo { color: #e8f0ed !important; }
@@ -216,9 +227,7 @@
       text-align: center;
     }
 
-    /* ============================================================
-       ABOUT HERO - SHORT, CONTENT AT TOP
-       ============================================================ */
+    /* ===== ABOUT HERO ===== */
     .about-hero {
       width: 100%;
       min-height: 420px;
@@ -273,7 +282,6 @@
       line-height: 1.5;
     }
 
-    /* Hero images grid - compact */
     .hero-images-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -318,9 +326,7 @@
       .about-hero-content .hero-badge { font-size: 0.55rem; padding: 0.15rem 0.8rem; }
     }
 
-    /* ============================================================
-       OUR STORY - split layout (image + text)
-       ============================================================ */
+    /* ===== OUR STORY ===== */
     .story-section {
       background: var(--bg-primary);
       padding: 5rem 0;
@@ -337,9 +343,9 @@
       overflow: hidden;
       box-shadow: 0 20px 40px var(--shadow);
     }
-    .story-image img {
+        .story-image img {
       width: 100%;
-      height: 400px;
+      height: 520px;
       object-fit: cover;
       display: block;
     }
@@ -372,22 +378,199 @@
       font-style: italic;
     }
 
-    @media (max-width: 992px) {
+           @media (max-width: 992px) {
       .story-grid { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
-      .story-image img { height: 280px; }
+      .story-image img { height: 360px; }
       .story-text h2 { font-size: 2rem; }
     }
     @media (max-width: 480px) {
-      .story-image img { height: 200px; }
+      .story-image img { height: 260px; }
       .story-text h2 { font-size: 1.6rem; }
       .story-text p { font-size: 0.95rem; }
     }
 
-    /* ============================================================
-       MISSION & VISION - two cards side by side
-       ============================================================ */
-    .mission-section {
+    /* ===== NEW: OUR CRAFT (HOW IT'S MADE) ===== */
+    .craft-section {
       background: var(--section-bg);
+      padding: 5rem 0;
+      transition: background var(--transition);
+    }
+    .craft-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+    .craft-step {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 2rem 1.5rem;
+      border: 1px solid var(--border-color);
+      transition: 0.3s ease;
+      text-align: center;
+      position: relative;
+    }
+    .craft-step:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px var(--shadow);
+      border-color: var(--accent);
+    }
+    .craft-step .step-num {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      width: 44px;
+      height: 44px;
+      line-height: 44px;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.9rem;
+    }
+    .craft-step .step-icon {
+      display: block;
+      font-size: 2rem;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+    }
+    .craft-step h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+    .craft-step p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    @media (max-width: 992px) { .craft-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .craft-grid { grid-template-columns: 1fr; gap: 1rem; } }
+
+    /* ===== NEW: WHAT WE MAKE (products detail) ===== */
+    .products-detail-section {
+      background: var(--bg-primary);
+      padding: 5rem 0;
+      transition: background var(--transition);
+    }
+    .products-detail-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+    .pd-card {
+      background: var(--card-bg);
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      transition: 0.35s ease;
+      box-shadow: 0 4px 16px var(--shadow);
+    }
+    .pd-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px var(--shadow);
+      border-color: var(--accent);
+    }
+    .pd-card .pd-img {
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+      background: #e8f0ed;
+    }
+    .pd-card .pd-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .pd-card:hover .pd-img img { transform: scale(1.06); }
+    .pd-card .pd-body { padding: 1.6rem 1.8rem 1.8rem; }
+    .pd-card .pd-body h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+    .pd-card .pd-body p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-bottom: 0.8rem;
+    }
+    .pd-card .pd-body ul {
+      list-style: none;
+      padding: 0;
+    }
+    .pd-card .pd-body ul li {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      padding: 0.25rem 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pd-card .pd-body ul li i {
+      color: var(--accent);
+      font-size: 0.75rem;
+    }
+    @media (max-width: 992px) { .products-detail-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .products-detail-grid { grid-template-columns: 1fr; } }
+
+    /* ===== NEW: VALUES (why we do it) ===== */
+    .values-section {
+      background: var(--section-bg);
+      padding: 5rem 0;
+      transition: background var(--transition);
+    }
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+    .value-card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 2.2rem 1.8rem;
+      border: 1px solid var(--border-color);
+      transition: 0.3s ease;
+      text-align: center;
+    }
+    .value-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px var(--shadow);
+      border-color: var(--accent);
+    }
+    .value-card .v-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 64px;
+      height: 64px;
+      background: rgba(58, 125, 107, 0.1);
+      border-radius: 20px;
+      color: var(--accent);
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+    }
+    .value-card h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+    .value-card p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    @media (max-width: 992px) { .values-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .values-grid { grid-template-columns: 1fr; } }
+
+    /* ===== MISSION & VISION ===== */
+    .mission-section {
+      background: var(--bg-primary);
       padding: 5rem 0;
       transition: background var(--transition);
     }
@@ -445,122 +628,118 @@
       .mission-card h3 { font-size: 1.4rem; }
     }
 
-    /* ============================================================
-       OUR JOURNEY - Roadmap style (left-right alternating)
-       ============================================================ */
+    /* ===== OUR JOURNEY - REBUILT CLEAN TIMELINE ===== */
     .journey-section {
-      background: var(--bg-primary);
+      background: var(--section-bg);
       padding: 5rem 0;
       transition: background var(--transition);
     }
-    .journey-timeline {
+    .timeline {
       position: relative;
-      max-width: 900px;
+      max-width: 1000px;
       margin: 2rem auto 0;
-      padding: 0 1rem;
+      padding: 1rem 0;
     }
-    .journey-timeline::before {
+    .timeline::before {
       content: '';
       position: absolute;
       top: 0;
       bottom: 0;
       left: 50%;
-      width: 3px;
-      background: var(--accent);
+      width: 2px;
+      background: var(--border-color);
       transform: translateX(-50%);
-      opacity: 0.3;
     }
-    .journey-item {
-      display: flex;
-      align-items: flex-start;
-      margin-bottom: 3rem;
+    .tl-item {
       position: relative;
+      width: 50%;
+      padding: 0 2.5rem 2.5rem 0;
+      box-sizing: border-box;
     }
-    .journey-item:last-child { margin-bottom: 0; }
-
-    .journey-item:nth-child(odd) {
-      flex-direction: row;
-      padding-right: calc(50% + 2rem);
-    }
-    .journey-item:nth-child(odd) .journey-content {
+    .tl-item:nth-child(odd) {
+      left: 0;
       text-align: right;
     }
-    .journey-item:nth-child(odd) .journey-dot {
-      right: -8px;
-      left: auto;
-    }
-
-    .journey-item:nth-child(even) {
-      flex-direction: row-reverse;
-      padding-left: calc(50% + 2rem);
-    }
-    .journey-item:nth-child(even) .journey-content {
+    .tl-item:nth-child(even) {
+      left: 50%;
+      padding: 0 0 2.5rem 2.5rem;
       text-align: left;
     }
-    .journey-item:nth-child(even) .journey-dot {
-      left: -8px;
-      right: auto;
-    }
-
-    .journey-dot {
+    .tl-item .tl-dot {
       position: absolute;
-      top: 6px;
-      width: 16px;
-      height: 16px;
+      top: 8px;
+      width: 18px;
+      height: 18px;
       background: var(--accent);
-      border-radius: 50%;
       border: 3px solid var(--bg-primary);
+      border-radius: 50%;
       box-shadow: 0 0 0 3px var(--accent);
       z-index: 2;
-      flex-shrink: 0;
     }
+    .tl-item:nth-child(odd) .tl-dot { right: -9px; }
+    .tl-item:nth-child(even) .tl-dot { left: -9px; }
 
-    .journey-content {
-      flex: 1;
+    .tl-item .tl-content {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 1.5rem 1.8rem;
+      box-shadow: 0 4px 16px var(--shadow);
+      transition: 0.3s ease;
+      display: inline-block;
+      text-align: inherit;
+      width: 100%;
+      max-width: 100%;
     }
-    .journey-content .year {
+    .tl-item .tl-content:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 12px 30px var(--shadow);
+    }
+    .tl-item .tl-year {
       font-size: 1.8rem;
       font-weight: 700;
       color: var(--accent);
       line-height: 1.2;
       margin-bottom: 0.2rem;
     }
-    .journey-content h4 {
+    .tl-item .tl-content h4 {
       font-size: 1.15rem;
       font-weight: 600;
       color: var(--text-primary);
       margin-bottom: 0.3rem;
     }
-    .journey-content p {
+    .tl-item .tl-content p {
       color: var(--text-secondary);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       line-height: 1.6;
+      margin: 0;
     }
 
+    /* Mobile timeline */
     @media (max-width: 768px) {
-      .journey-timeline::before { left: 20px; }
-      .journey-item:nth-child(odd),
-      .journey-item:nth-child(even) {
-        flex-direction: row;
-        padding: 0 0 0 3.5rem !important;
+      .timeline::before { left: 18px; }
+      .tl-item,
+      .tl-item:nth-child(odd),
+      .tl-item:nth-child(even) {
+        width: 100%;
+        left: 0;
+        padding: 0 0 2rem 3rem;
+        text-align: left;
       }
-      .journey-item:nth-child(odd) .journey-content,
-      .journey-item:nth-child(even) .journey-content {
-        text-align: left !important;
+      .tl-item .tl-dot,
+      .tl-item:nth-child(odd) .tl-dot,
+      .tl-item:nth-child(even) .tl-dot {
+        left: 9px;
+        right: auto;
       }
-      .journey-item:nth-child(odd) .journey-dot,
-      .journey-item:nth-child(even) .journey-dot {
-        left: 12px !important;
-        right: auto !important;
-      }
-      .journey-content .year { font-size: 1.4rem; }
+      .tl-item .tl-content { padding: 1.2rem 1.4rem; }
+      .tl-item .tl-year { font-size: 1.4rem; }
     }
 
-    /* ============================================================
-       OUR TEAM - clean cards, no social icons
-       ============================================================ */
+    /* ===== OUR TEAM ===== */
     .team-section {
-      background: var(--section-bg);
+      background: var(--bg-primary);
       padding: 5rem 0;
       transition: background var(--transition);
     }
@@ -627,9 +806,7 @@
       .team-card .team-img { height: 240px; }
     }
 
-    /* ============================================================
-       CTA
-       ============================================================ */
+    /* ===== CTA ===== */
     .about-cta {
       background: var(--bg-dark);
       border-radius: 32px;
@@ -730,9 +907,7 @@
       .about-cta .cta-btn-secondary { padding: 0.7rem 1.5rem; font-size: 0.85rem; }
     }
 
-    /* ============================================================
-       HAMBURGER & MOBILE NAV (EXACT COPY)
-       ============================================================ */
+    /* ===== HAMBURGER & MOBILE NAV ===== */
     .hamburger {
       display: none;
       flex-direction: column;
@@ -810,8 +985,6 @@
     }
     .mobile-auth .mobile-login { color: var(--accent); border: 2px solid var(--accent); background: transparent; }
     .mobile-auth .mobile-login:hover { background: var(--accent); color: #fff; }
-    .mobile-auth .mobile-signup { background: var(--accent); color: #fff; }
-    .mobile-auth .mobile-signup:hover { background: var(--accent-dark); }
 
     .mobile-actions { margin-top: 8px; gap: 8px; width: 100%; display: flex; flex-wrap: wrap; }
     .mobile-actions button {
@@ -832,9 +1005,7 @@
       .hamburger { display: flex !important; }
     }
 
-    /* ============================================================
-       FOOTER (EXACT COPY)
-       ============================================================ */
+    /* ===== FOOTER ===== */
     footer {
       background: var(--bg-dark);
       color: var(--text-light);
@@ -926,10 +1097,21 @@
 </head>
 <body>
 
-  <!-- ===== NAVBAR (EXACT COPY) ===== -->
+  <!-- ===== NAVBAR ===== -->
   <nav class="navbar">
     <div class="container" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; width:100%; padding:0;">
-      <a href="index.html" class="logo"><i class="fas fa-utensils"></i>Ceram<span>ica</span></a>
+      <a href="index.html" class="logo">
+        <svg class="logo-mark" viewBox="0 0 40 40" width="34" height="34" xmlns="http://www.w3.org/2000/svg" fill="none">
+          <path d="M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z" fill="currentColor" fill-opacity="0.15"/>
+          <path d="M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M6 16h28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M16 16c0-3 1.8-5 4-5s4 2 4 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="20" cy="10" r="1.8" fill="currentColor"/>
+          <path d="M4 20h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M32 20h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        Ceram<span>ica</span>
+      </a>
       <ul class="nav-links">
         <li class="dropdown" id="homeDropdown">
           <a href="#" onclick="toggleDropdown(event)">Home <i class="fas fa-chevron-down" style="font-size:0.6rem;"></i></a>
@@ -952,8 +1134,7 @@
         <button class="toggle-btn" onclick="toggleTheme()" title="Toggle Dark/Light Mode" id="themeToggle">
           <i class="fas fa-moon"></i>
         </button>
-        <a href="login.html" class="login-btn"><i class="fas fa-sign-in-alt"></i> Login</a>
-        <a href="signup.html" class="signup-btn">Sign Up</a>
+        <a href="login.html" class="login-btn">Login</a>
       </div>
     </div>
   </nav>
@@ -966,7 +1147,18 @@
   <!-- ===== MOBILE NAV DRAWER ===== -->
   <div class="mobile-nav-drawer" id="mobileNav">
     <div class="drawer-header">
-      <a href="index.html" class="logo"><i class="fas fa-utensils"></i>Ceram<span>ica</span></a>
+      <a href="index.html" class="logo">
+        <svg class="logo-mark" viewBox="0 0 40 40" width="30" height="30" xmlns="http://www.w3.org/2000/svg" fill="none">
+          <path d="M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z" fill="currentColor" fill-opacity="0.15"/>
+          <path d="M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M6 16h28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M16 16c0-3 1.8-5 4-5s4 2 4 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="20" cy="10" r="1.8" fill="currentColor"/>
+          <path d="M4 20h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M32 20h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        Ceram<span>ica</span>
+      </a>
       <button class="close-drawer" onclick="closeMenu()">✕</button>
     </div>
     <ul>
@@ -982,7 +1174,6 @@
       <li><a href="contact.html">Contact</a></li>
       <li class="mobile-auth">
         <a href="login.html" class="mobile-login">Login</a>
-        <a href="signup.html" class="mobile-signup">Sign Up</a>
       </li>
       <li class="mobile-actions">
         <button onclick="toggleMobileRTL()" id="mobileRtlBtn">
@@ -998,9 +1189,7 @@
   <!-- ===== OVERLAY ===== -->
   <div class="nav-overlay" id="navOverlay" onclick="closeMenu()"></div>
 
-  <!-- ============================================================
-       ABOUT HERO - SHORT, CONTENT AT TOP
-       ============================================================ -->
+  <!-- ===== ABOUT HERO ===== -->
   <section class="about-hero">
     <div class="container">
       <div class="about-hero-content">
@@ -1019,9 +1208,7 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       OUR STORY - split layout (image + text)
-       ============================================================ -->
+  <!-- ===== OUR STORY (expanded) ===== -->
   <section class="story-section">
     <div class="container">
       <div class="story-grid">
@@ -1032,16 +1219,120 @@
           <span class="story-label"><i class="fas fa-quote-left"></i> Since 2018</span>
           <h2>Our <span>Journey</span> Began in a Small Kitchen</h2>
           <p>What started as a passion for beautifully crafted cookware has grown into a brand loved by home cooks around the world. Our founder, Sarah, spent years searching for ceramic pieces that combined timeless design with everyday durability — and when she couldn't find them, she decided to create them herself.</p>
-          <p>Today, Ceramica is a team of artisans, designers, and food lovers dedicated to bringing you cookware that performs beautifully and looks stunning on your table.</p>
+          <p>She began with a single kiln in a small London studio, hand-throwing Dutch ovens and baking dishes for friends and family. Word spread quickly — first through local markets, then through food bloggers and home cooks who fell in love with the warm, earthy finishes and the way our pieces cooked.</p>
+          <p>Today, Ceramica is a team of artisans, designers, and food lovers dedicated to bringing you cookware that performs beautifully and looks stunning on your table. Every piece is still touched by hand, still glazed in small batches, and still made with the same care as the very first pot Sarah pulled from that kiln.</p>
           <span class="story-signature">— Sarah Mitchell, Founder</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       MISSION & VISION - two cards side by side
-       ============================================================ -->
+  <!-- ===== NEW: OUR CRAFT (HOW IT'S MADE) ===== -->
+  <section class="craft-section">
+    <div class="container">
+      <h2 class="section-title"><i class="fas fa-hands"></i> How It's Made</h2>
+      <p class="section-subtitle">From raw clay to your kitchen table — every piece follows four careful steps.</p>
+      <div class="craft-grid">
+        <div class="craft-step">
+          <span class="step-num">01</span>
+          <span class="step-icon"><i class="fas fa-hand-holding-heart"></i></span>
+          <h3>Sourcing the Clay</h3>
+          <p>We hand-select natural clay from trusted, sustainable quarries — free from lead, cadmium, and other harmful additives.</p>
+        </div>
+        <div class="craft-step">
+          <span class="step-num">02</span>
+          <span class="step-icon"><i class="fas fa-fire"></i></span>
+          <h3>Shaping &amp; Firing</h3>
+          <p>Each piece is shaped by our master artisans, then fired at over 1,200°C to develop strength, density, and a durable finish.</p>
+        </div>
+        <div class="craft-step">
+          <span class="step-num">03</span>
+          <span class="step-icon"><i class="fas fa-paint-brush"></i></span>
+          <h3>Hand Glazing</h3>
+          <p>Our signature earthy glazes are applied by hand in small batches — giving every piece a subtly unique, one-of-a-kind tone.</p>
+        </div>
+        <div class="craft-step">
+          <span class="step-num">04</span>
+          <span class="step-icon"><i class="fas fa-box-open"></i></span>
+          <h3>Quality &amp; Packing</h3>
+          <p>Every piece is inspected by hand and packed in recyclable, plastic-free materials — ready to bring warmth to your kitchen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== NEW: WHAT WE MAKE ===== -->
+  <section class="products-detail-section">
+    <div class="container">
+      <h2 class="section-title"><i class="fas fa-utensils"></i> What We Make</h2>
+      <p class="section-subtitle">Three core collections designed to cover every corner of your kitchen.</p>
+      <div class="products-detail-grid">
+        <div class="pd-card">
+          <div class="pd-img"><img src="images/category 1.jpg" alt="Cookware collection"></div>
+          <div class="pd-body">
+            <h3>Cookware</h3>
+            <p>Our flagship collection — built for slow cooking, searing, and everyday meals that bring people together.</p>
+            <ul>
+              <li><i class="fas fa-check"></i> Dutch ovens &amp; casseroles</li>
+              <li><i class="fas fa-check"></i> Frying pans &amp; skillets</li>
+              <li><i class="fas fa-check"></i> Sauce pots &amp; stockpots</li>
+            </ul>
+          </div>
+        </div>
+        <div class="pd-card">
+          <div class="pd-img"><img src="images/category 2.jpg" alt="Bakeware collection"></div>
+          <div class="pd-body">
+            <h3>Bakeware</h3>
+            <p>Stoneware baking dishes that create perfectly golden crusts and even browning — from sourdough to pies.</p>
+            <ul>
+              <li><i class="fas fa-check"></i> Baking dishes &amp; casseroles</li>
+              <li><i class="fas fa-check"></i> Pie plates &amp; tarts</li>
+              <li><i class="fas fa-check"></i> Loaf pans &amp; baking stones</li>
+            </ul>
+          </div>
+        </div>
+        <div class="pd-card">
+          <div class="pd-img"><img src="images/category 3.jpg" alt="Storage and tools"></div>
+          <div class="pd-body">
+            <h3>Storage &amp; Tools</h3>
+            <p>Stylish ceramic containers and everyday tools that keep your kitchen tidy — and beautiful on the counter.</p>
+            <ul>
+              <li><i class="fas fa-check"></i> Canisters &amp; jars</li>
+              <li><i class="fas fa-check"></i> Serving platters &amp; bowls</li>
+              <li><i class="fas fa-check"></i> Wooden utensils &amp; sets</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== NEW: OUR VALUES ===== -->
+  <section class="values-section">
+    <div class="container">
+      <h2 class="section-title"><i class="fas fa-leaf"></i> Our Values</h2>
+      <p class="section-subtitle">Three things we never compromise on.</p>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="v-icon"><i class="fas fa-seedling"></i></div>
+          <h3>Sustainable by Design</h3>
+          <p>Eco-friendly materials, plastic-free packaging, and a production line built to minimise waste at every step.</p>
+        </div>
+        <div class="value-card">
+          <div class="v-icon"><i class="fas fa-heart"></i></div>
+          <h3>Made by Hand</h3>
+          <p>Every piece is shaped, glazed, and inspected by our artisans — not mass-produced on an assembly line.</p>
+        </div>
+        <div class="value-card">
+          <div class="v-icon"><i class="fas fa-shield-alt"></i></div>
+          <h3>Safe for Your Family</h3>
+          <p>100% ceramic, non-toxic, and free from PFOA, lead, and cadmium. Cook with confidence, every single day.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MISSION & VISION ===== -->
   <section class="mission-section">
     <div class="container">
       <h2 class="section-title"><i class="fas fa-bullseye"></i> Our Mission &amp; Vision</h2>
@@ -1061,42 +1352,40 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       OUR JOURNEY - Roadmap style (left-right alternating)
-       ============================================================ -->
+  <!-- ===== OUR JOURNEY - REBUILT CLEAN TIMELINE ===== -->
   <section class="journey-section">
     <div class="container">
       <h2 class="section-title"><i class="fas fa-road"></i> Our Journey</h2>
       <p class="section-subtitle">Milestones that shaped who we are today.</p>
-      <div class="journey-timeline">
-        <div class="journey-item">
-          <div class="journey-dot"></div>
-          <div class="journey-content">
-            <div class="year">2018</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-year">2018</div>
             <h4>The Beginning</h4>
             <p>Ceramica was founded in a small London kitchen with a single kiln and a dream to create the perfect ceramic Dutch oven.</p>
           </div>
         </div>
-        <div class="journey-item">
-          <div class="journey-dot"></div>
-          <div class="journey-content">
-            <div class="year">2020</div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-year">2020</div>
             <h4>First Collection</h4>
             <p>Launched our first full collection of cookware, bakeware, and storage — instantly loved by home cooks and food bloggers.</p>
           </div>
         </div>
-        <div class="journey-item">
-          <div class="journey-dot"></div>
-          <div class="journey-content">
-            <div class="year">2022</div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-year">2022</div>
             <h4>Global Expansion</h4>
             <p>Expanded to 35 countries with a dedicated team of artisans, designers, and customer care specialists.</p>
           </div>
         </div>
-        <div class="journey-item">
-          <div class="journey-dot"></div>
-          <div class="journey-content">
-            <div class="year">2024</div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-year">2024</div>
             <h4>New Chapter</h4>
             <p>Launched our sustainable packaging initiative and introduced our first eco-friendly production line.</p>
           </div>
@@ -1105,9 +1394,7 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       OUR TEAM - clean cards, no social icons
-       ============================================================ -->
+  <!-- ===== OUR TEAM ===== -->
   <section class="team-section">
     <div class="container">
       <h2 class="section-title"><i class="fas fa-users"></i> Our Team</h2>
@@ -1142,7 +1429,7 @@
         </div>
         <div class="team-card">
           <div class="team-img">
-            <img src="images/team 4.jpg" alt="Maria Rodriguez">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=800&fit=crop&crop=face" alt="Maria Rodriguez">
           </div>
           <div class="team-info">
             <h4>Maria Rodriguez</h4>
@@ -1153,9 +1440,7 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       CTA
-       ============================================================ -->
+  <!-- ===== CTA ===== -->
   <div class="container">
     <div class="about-cta">
       <h2>Join the <span>Ceramica</span> Family</h2>
@@ -1171,12 +1456,21 @@
     </div>
   </div>
 
-  <!-- ===== FOOTER (EXACT COPY) ===== -->
+  <!-- ===== FOOTER ===== -->
   <footer>
     <div class="footer-container">
       <div class="footer-box">
         <a href="index.html" class="footer-logo-link" onclick="scrollToTop()">
-          <i class="fas fa-utensils"></i>Ceram<span>ica</span>
+          <svg class="logo-mark" viewBox="0 0 40 40" width="34" height="34" xmlns="http://www.w3.org/2000/svg" fill="none">
+            <path d="M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z" fill="currentColor" fill-opacity="0.15"/>
+            <path d="M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M6 16h28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M16 16c0-3 1.8-5 4-5s4 2 4 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="20" cy="10" r="1.8" fill="currentColor"/>
+            <path d="M4 20h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M32 20h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          Ceram<span>ica</span>
         </a>
         <p>Your destination for premium ceramic cookware, bakeware, and kitchen tools. Crafted for warmth, durability, and timeless style.</p>
       </div>
@@ -1191,7 +1485,7 @@
       <div class="footer-box">
         <h2>Contact</h2>
         <p><i class="fas fa-map-marker-alt"></i> 27 Baker St, London</p>
-        <p><i class="fas fa-phone-alt"></i> +44 (20) 7946 0138</p>
+        <p><i class="fas fa-phone"></i> +44 (20) 7946 0138</p>
         <p><i class="fas fa-envelope"></i> hello@ceramica.com</p>
         <p><i class="fas fa-clock"></i> Mon - Sat : 9AM - 8PM</p>
       </div>
@@ -1213,7 +1507,7 @@
     <p class="copy">© 2026 <span>Ceramica</span>. All Rights Reserved. Made for the heart of your home.</p>
   </footer>
 
-  <!-- ===== JAVASCRIPT (EXACT COPY) ===== -->
+  <!-- ===== JAVASCRIPT ===== -->
   <script>
     // ===== DROPDOWN TOGGLE =====
     let dropdownOpen = false;
@@ -1231,8 +1525,10 @@
       }
     });
 
-    // ===== THEME TOGGLE =====
-    let darkMode = false;
+    /* ===== THEME + RTL PERSISTENCE ===== */
+    let darkMode = localStorage.getItem('ceramica-theme') === 'dark';
+    let rtlMode = localStorage.getItem('ceramica-rtl') === 'rtl';
+
     function toggleTheme() {
       darkMode = !darkMode;
       const themeIcon = document.getElementById('themeToggle').querySelector('i');
@@ -1240,11 +1536,13 @@
       const mobileThemeLabel = document.getElementById('mobileThemeLabel');
       if (darkMode) {
         document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('ceramica-theme', 'dark');
         themeIcon.className = 'fas fa-sun';
         if (mobileThemeIcon) mobileThemeIcon.className = 'fas fa-sun';
         if (mobileThemeLabel) mobileThemeLabel.textContent = 'Light';
       } else {
         document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('ceramica-theme', 'light');
         themeIcon.className = 'fas fa-moon';
         if (mobileThemeIcon) mobileThemeIcon.className = 'fas fa-moon';
         if (mobileThemeLabel) mobileThemeLabel.textContent = 'Dark';
@@ -1252,25 +1550,24 @@
     }
     function toggleMobileTheme() { toggleTheme(); }
 
-    // ===== RTL TOGGLE =====
-    let rtlMode = false;
     function toggleRTL() {
       rtlMode = !rtlMode;
       const rtlBtn = document.getElementById('rtlBtn');
       const mobileRtlLabel = document.getElementById('mobileRtlLabel');
       if (rtlMode) {
         document.documentElement.setAttribute('dir', 'rtl');
+        localStorage.setItem('ceramica-rtl', 'rtl');
         if (rtlBtn) rtlBtn.textContent = 'LTR';
         if (mobileRtlLabel) mobileRtlLabel.textContent = 'LTR';
       } else {
         document.documentElement.removeAttribute('dir');
+        localStorage.setItem('ceramica-rtl', 'ltr');
         if (rtlBtn) rtlBtn.textContent = 'RTL';
         if (mobileRtlLabel) mobileRtlLabel.textContent = 'RTL';
       }
     }
     function toggleMobileRTL() { toggleRTL(); }
 
-    // ===== MOBILE MENU =====
     function toggleMenu(open) {
       const hamburger = document.getElementById('hamburger');
       const mobileNav = document.getElementById('mobileNav');
@@ -1301,8 +1598,23 @@
       link.addEventListener('click', function() { if (!this.classList.contains('dropdown-toggle')) { closeMenu(); } });
     });
 
-    // ===== SCROLL TO TOP =====
     function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+    window.addEventListener('load', function() {
+      if (document.documentElement.getAttribute('data-theme') === 'dark') {
+        document.getElementById('themeToggle').querySelector('i').className = 'fas fa-sun';
+        const mi = document.getElementById('mobileThemeIcon');
+        const ml = document.getElementById('mobileThemeLabel');
+        if (mi) mi.className = 'fas fa-sun';
+        if (ml) ml.textContent = 'Light';
+      }
+      if (document.documentElement.getAttribute('dir') === 'rtl') {
+        const rb = document.getElementById('rtlBtn');
+        const mrl = document.getElementById('mobileRtlLabel');
+        if (rb) rb.textContent = 'LTR';
+        if (mrl) mrl.textContent = 'LTR';
+      }
+    });
   </script>
 
 </body>

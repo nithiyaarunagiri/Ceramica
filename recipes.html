@@ -4,11 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
   <title>Ceramica · Recipe Blog</title>
-  <link rel="icon" type="image/jpeg" href="images/gift-hero.jpg">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40' fill='none'%3E%3Cpath d='M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z' fill='%233a7d6b' fill-opacity='0.2'/%3E%3Cpath d='M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z' stroke='%233a7d6b' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M6 16h28' stroke='%233a7d6b' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M16 16c0-3 1.8-5 4-5s4 2 4 5' stroke='%233a7d6b' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='20' cy='10' r='1.8' fill='%233a7d6b'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script>
+    /* Prevent theme flash on page load */
+    (function() {
+      try {
+        if (localStorage.getItem('ceramica-theme') === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+        if (localStorage.getItem('ceramica-rtl') === 'rtl') {
+          document.documentElement.setAttribute('dir', 'rtl');
+        }
+      } catch(e) {}
+    })();
+  </script>
   <style>
     /* ===== RESET & BASE ===== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -56,7 +69,7 @@
 
     .container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
 
-    /* ===== NAVBAR (EXACT COPY) ===== */
+    /* ===== NAVBAR ===== */
     .navbar {
       display: flex;
       flex-wrap: wrap;
@@ -81,6 +94,18 @@
       display: flex;
       align-items: center;
       gap: 4px;
+    }
+
+    /* ===== NEW LOGO MARK ===== */
+    .logo .logo-mark,
+    .footer-logo-link .logo-mark {
+      color: var(--accent);
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+    .logo:hover .logo-mark,
+    .footer-logo-link:hover .logo-mark {
+      transform: rotate(-6deg);
     }
 
     .logo span, .footer-logo-link span { color: var(--accent); font-weight: 300; }
@@ -180,20 +205,6 @@
     }
     .nav-controls .login-btn:hover { background: var(--accent-dark); transform: translateY(-2px); }
 
-    .nav-controls .signup-btn {
-      background: transparent;
-      color: var(--accent);
-      border: 2px solid var(--accent);
-      padding: 0.45rem 1.2rem;
-      border-radius: 60px;
-      font-weight: 600;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: 0.2s;
-      text-decoration: none;
-    }
-    .nav-controls .signup-btn:hover { background: var(--accent); color: #fff; }
-
     [data-theme="dark"] .navbar { background: #0d1615 !important; border-bottom: 1px solid #1a2a27 !important; }
     [data-theme="dark"] .navbar .nav-links a { color: #e8f0ed !important; }
     [data-theme="dark"] .navbar .logo { color: #e8f0ed !important; }
@@ -217,7 +228,7 @@
     }
 
     /* ============================================================
-       RECIPES HERO - DIFFERENT LAYOUT WITH IMAGES
+       RECIPES HERO
        ============================================================ */
     .recipes-hero {
       width: 100%;
@@ -348,7 +359,7 @@
     }
 
     /* ============================================================
-       BLOG SECTION - 6 CARDS (SHOP-FOCUSED)
+       BLOG SECTION - 6 CARDS
        ============================================================ */
     .blog-section {
       background: var(--bg-primary);
@@ -607,7 +618,7 @@
     }
 
     /* ============================================================
-       HAMBURGER & MOBILE NAV (EXACT COPY)
+       HAMBURGER & MOBILE NAV
        ============================================================ */
     .hamburger {
       display: none;
@@ -686,8 +697,6 @@
     }
     .mobile-auth .mobile-login { color: var(--accent); border: 2px solid var(--accent); background: transparent; }
     .mobile-auth .mobile-login:hover { background: var(--accent); color: #fff; }
-    .mobile-auth .mobile-signup { background: var(--accent); color: #fff; }
-    .mobile-auth .mobile-signup:hover { background: var(--accent-dark); }
 
     .mobile-actions { margin-top: 8px; gap: 8px; width: 100%; display: flex; flex-wrap: wrap; }
     .mobile-actions button {
@@ -709,7 +718,7 @@
     }
 
     /* ============================================================
-       FOOTER (EXACT COPY)
+       FOOTER
        ============================================================ */
     footer {
       background: var(--bg-dark);
@@ -802,10 +811,21 @@
 </head>
 <body>
 
-  <!-- ===== NAVBAR (EXACT COPY) ===== -->
+  <!-- ===== NAVBAR ===== -->
   <nav class="navbar">
     <div class="container" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; width:100%; padding:0;">
-      <a href="index.html" class="logo"><i class="fas fa-utensils"></i>Ceram<span>ica</span></a>
+      <a href="index.html" class="logo">
+        <svg class="logo-mark" viewBox="0 0 40 40" width="34" height="34" xmlns="http://www.w3.org/2000/svg" fill="none">
+          <path d="M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z" fill="currentColor" fill-opacity="0.15"/>
+          <path d="M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M6 16h28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M16 16c0-3 1.8-5 4-5s4 2 4 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="20" cy="10" r="1.8" fill="currentColor"/>
+          <path d="M4 20h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M32 20h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        Ceram<span>ica</span>
+      </a>
       <ul class="nav-links">
         <li class="dropdown" id="homeDropdown">
           <a href="#" onclick="toggleDropdown(event)">Home <i class="fas fa-chevron-down" style="font-size:0.6rem;"></i></a>
@@ -828,8 +848,7 @@
         <button class="toggle-btn" onclick="toggleTheme()" title="Toggle Dark/Light Mode" id="themeToggle">
           <i class="fas fa-moon"></i>
         </button>
-        <a href="login.html" class="login-btn"><i class="fas fa-sign-in-alt"></i> Login</a>
-        <a href="signup.html" class="signup-btn">Sign Up</a>
+        <a href="login.html" class="login-btn">Login</a>
       </div>
     </div>
   </nav>
@@ -842,7 +861,18 @@
   <!-- ===== MOBILE NAV DRAWER ===== -->
   <div class="mobile-nav-drawer" id="mobileNav">
     <div class="drawer-header">
-      <a href="index.html" class="logo"><i class="fas fa-utensils"></i>Ceram<span>ica</span></a>
+      <a href="index.html" class="logo">
+        <svg class="logo-mark" viewBox="0 0 40 40" width="30" height="30" xmlns="http://www.w3.org/2000/svg" fill="none">
+          <path d="M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z" fill="currentColor" fill-opacity="0.15"/>
+          <path d="M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M6 16h28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M16 16c0-3 1.8-5 4-5s4 2 4 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="20" cy="10" r="1.8" fill="currentColor"/>
+          <path d="M4 20h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M32 20h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        Ceram<span>ica</span>
+      </a>
       <button class="close-drawer" onclick="closeMenu()">✕</button>
     </div>
     <ul>
@@ -858,7 +888,6 @@
       <li><a href="contact.html">Contact</a></li>
       <li class="mobile-auth">
         <a href="login.html" class="mobile-login">Login</a>
-        <a href="signup.html" class="mobile-signup">Sign Up</a>
       </li>
       <li class="mobile-actions">
         <button onclick="toggleMobileRTL()" id="mobileRtlBtn">
@@ -874,9 +903,7 @@
   <!-- ===== OVERLAY ===== -->
   <div class="nav-overlay" id="navOverlay" onclick="closeMenu()"></div>
 
-  <!-- ============================================================
-       RECIPES HERO - DIFFERENT LAYOUT WITH IMAGES
-       ============================================================ -->
+  <!-- ===== RECIPES HERO ===== -->
   <section class="recipes-hero">
     <div class="container">
       <div class="hero-grid">
@@ -917,16 +944,13 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       BLOG SECTION - 6 CARDS (SHOP-FOCUSED)
-       ============================================================ -->
+  <!-- ===== BLOG SECTION ===== -->
   <section class="blog-section">
     <div class="container">
       <h2 class="section-title"><i class="fas fa-utensils"></i> Featured Recipes</h2>
       <p class="section-subtitle">Handpicked recipes from our kitchen to yours. Made better with Ceramica cookware.</p>
       <div class="blog-grid">
 
-        <!-- Card 1 -->
         <div class="blog-card">
           <div class="blog-img">
             <img src="images/blog 1.jpg" alt="One-Pot Pasta">
@@ -946,7 +970,6 @@
           </div>
         </div>
 
-        <!-- Card 2 -->
         <div class="blog-card">
           <div class="blog-img">
             <img src="images/blog 2.jpg" alt="Sourdough Bread">
@@ -966,7 +989,6 @@
           </div>
         </div>
 
-        <!-- Card 3 -->
         <div class="blog-card">
           <div class="blog-img">
             <img src="images/blog 3.jpg" alt="Vegetable Stir-Fry">
@@ -986,7 +1008,6 @@
           </div>
         </div>
 
-        <!-- Card 4 -->
         <div class="blog-card">
           <div class="blog-img">
             <img src="images/blog 4.jpg" alt="Chocolate Cake">
@@ -1006,7 +1027,6 @@
           </div>
         </div>
 
-        <!-- Card 5 -->
         <div class="blog-card">
           <div class="blog-img">
             <img src="images/blog 5.jpg" alt="Roasted Chicken">
@@ -1026,7 +1046,6 @@
           </div>
         </div>
 
-        <!-- Card 6 -->
         <div class="blog-card">
           <div class="blog-img">
             <img src="images/blog 6.jpg" alt="Homemade Pizza">
@@ -1050,9 +1069,7 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       CTA
-       ============================================================ -->
+  <!-- ===== CTA ===== -->
   <div class="container">
     <div class="recipes-cta">
       <span class="cta-icon"><i class="fas fa-utensil-spoon"></i></span>
@@ -1069,12 +1086,21 @@
     </div>
   </div>
 
-  <!-- ===== FOOTER (EXACT COPY) ===== -->
+  <!-- ===== FOOTER ===== -->
   <footer>
     <div class="footer-container">
       <div class="footer-box">
         <a href="index.html" class="footer-logo-link" onclick="scrollToTop()">
-          <i class="fas fa-utensils"></i>Ceram<span>ica</span>
+          <svg class="logo-mark" viewBox="0 0 40 40" width="34" height="34" xmlns="http://www.w3.org/2000/svg" fill="none">
+            <path d="M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z" fill="currentColor" fill-opacity="0.15"/>
+            <path d="M8 16h24v10a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8V16z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M6 16h28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M16 16c0-3 1.8-5 4-5s4 2 4 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="20" cy="10" r="1.8" fill="currentColor"/>
+            <path d="M4 20h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M32 20h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          Ceram<span>ica</span>
         </a>
         <p>Your destination for premium ceramic cookware, bakeware, and kitchen tools. Crafted for warmth, durability, and timeless style.</p>
       </div>
@@ -1089,7 +1115,7 @@
       <div class="footer-box">
         <h2>Contact</h2>
         <p><i class="fas fa-map-marker-alt"></i> 27 Baker St, London</p>
-        <p><i class="fas fa-phone-alt"></i> +44 (20) 7946 0138</p>
+        <p><i class="fas fa-phone"></i> +44 (20) 7946 0138</p>
         <p><i class="fas fa-envelope"></i> hello@ceramica.com</p>
         <p><i class="fas fa-clock"></i> Mon - Sat : 9AM - 8PM</p>
       </div>
@@ -1111,7 +1137,7 @@
     <p class="copy">© 2026 <span>Ceramica</span>. All Rights Reserved. Made for the heart of your home.</p>
   </footer>
 
-  <!-- ===== JAVASCRIPT (EXACT COPY) ===== -->
+  <!-- ===== JAVASCRIPT ===== -->
   <script>
     // ===== DROPDOWN TOGGLE =====
     let dropdownOpen = false;
@@ -1129,8 +1155,10 @@
       }
     });
 
-    // ===== THEME TOGGLE =====
-    let darkMode = false;
+    /* ===== THEME + RTL PERSISTENCE ===== */
+    let darkMode = localStorage.getItem('ceramica-theme') === 'dark';
+    let rtlMode = localStorage.getItem('ceramica-rtl') === 'rtl';
+
     function toggleTheme() {
       darkMode = !darkMode;
       const themeIcon = document.getElementById('themeToggle').querySelector('i');
@@ -1138,11 +1166,13 @@
       const mobileThemeLabel = document.getElementById('mobileThemeLabel');
       if (darkMode) {
         document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('ceramica-theme', 'dark');
         themeIcon.className = 'fas fa-sun';
         if (mobileThemeIcon) mobileThemeIcon.className = 'fas fa-sun';
         if (mobileThemeLabel) mobileThemeLabel.textContent = 'Light';
       } else {
         document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('ceramica-theme', 'light');
         themeIcon.className = 'fas fa-moon';
         if (mobileThemeIcon) mobileThemeIcon.className = 'fas fa-moon';
         if (mobileThemeLabel) mobileThemeLabel.textContent = 'Dark';
@@ -1150,25 +1180,24 @@
     }
     function toggleMobileTheme() { toggleTheme(); }
 
-    // ===== RTL TOGGLE =====
-    let rtlMode = false;
     function toggleRTL() {
       rtlMode = !rtlMode;
       const rtlBtn = document.getElementById('rtlBtn');
       const mobileRtlLabel = document.getElementById('mobileRtlLabel');
       if (rtlMode) {
         document.documentElement.setAttribute('dir', 'rtl');
+        localStorage.setItem('ceramica-rtl', 'rtl');
         if (rtlBtn) rtlBtn.textContent = 'LTR';
         if (mobileRtlLabel) mobileRtlLabel.textContent = 'LTR';
       } else {
         document.documentElement.removeAttribute('dir');
+        localStorage.setItem('ceramica-rtl', 'ltr');
         if (rtlBtn) rtlBtn.textContent = 'RTL';
         if (mobileRtlLabel) mobileRtlLabel.textContent = 'RTL';
       }
     }
     function toggleMobileRTL() { toggleRTL(); }
 
-    // ===== MOBILE MENU =====
     function toggleMenu(open) {
       const hamburger = document.getElementById('hamburger');
       const mobileNav = document.getElementById('mobileNav');
@@ -1199,8 +1228,23 @@
       link.addEventListener('click', function() { if (!this.classList.contains('dropdown-toggle')) { closeMenu(); } });
     });
 
-    // ===== SCROLL TO TOP =====
     function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+    window.addEventListener('load', function() {
+      if (document.documentElement.getAttribute('data-theme') === 'dark') {
+        document.getElementById('themeToggle').querySelector('i').className = 'fas fa-sun';
+        const mi = document.getElementById('mobileThemeIcon');
+        const ml = document.getElementById('mobileThemeLabel');
+        if (mi) mi.className = 'fas fa-sun';
+        if (ml) ml.textContent = 'Light';
+      }
+      if (document.documentElement.getAttribute('dir') === 'rtl') {
+        const rb = document.getElementById('rtlBtn');
+        const mrl = document.getElementById('mobileRtlLabel');
+        if (rb) rb.textContent = 'LTR';
+        if (mrl) mrl.textContent = 'LTR';
+      }
+    });
   </script>
 
 </body>
